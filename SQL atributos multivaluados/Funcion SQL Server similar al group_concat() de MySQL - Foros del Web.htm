@@ -1,0 +1,1187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="es"><head>
+
+
+<!-- base href="http://www.forosdelweb.com/" --><!--[if IE]></base><![endif]-->
+	<link rel="canonical" href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="generator" content="vBulletin 3.8.6">
+
+<meta name="keywords" content="Funcion,SQL,Server,similar,group_concat,MySQL, Funcion SQL Server similar al group_concat() de MySQL, foros del web empleo seo emprendimiento social-media html css flash php javascript web-hosting .net java programacion hardware redes html5">
+<meta name="description" content="Hola chicos hace tiempo que no posteaba pero necesito ayuda y no pude encontrar por ningun lado esto: Estoy haciendo para la facultad un programa inmobiliario e ">
+
+
+<meta property="og:title" content="Foros del Web">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://www.forosdelweb.com/">
+    <meta property="og:image" content="http://www.forosdelweb.com/w/skins/common/images/wiki.png">
+    <meta property="fb:page_id" content="135614054955">
+
+<!-- CSS Stylesheet -->
+<link rel="stylesheet" type="text/css" href="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/headmenu.css">
+<link rel="stylesheet" type="text/css" href="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/shared.css">
+
+<style type="text/css" id="vbulletin_css">
+/**
+* vBulletin 3.8.6 CSS
+* Style: 'Fdw 2011'; Style ID: 11
+*/
+@import url("clientscript/vbulletin_css/style-5c9630c7-00011.css");
+</style>
+<link rel="stylesheet" type="text/css" href="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/vbulletin_important.css">
+
+
+<link rel="shortcut icon" href="http://static.forosdelweb.com/favicon.ico">
+<!-- / CSS Stylesheet -->
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/connection-min.js"></script>
+
+<script type="text/javascript">
+<!--
+var SESSIONURL = "";
+var SECURITYTOKEN = "guest";
+var IMGDIR_MISC = "http://static.forosdelweb.com/images/misc";
+var vb_disable_ajax = parseInt("0", 10);
+// -->
+</script>
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/vbulletin_global.js"></script>
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/vbulletin_menu.js"></script>
+	<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/fdw_menu.js"></script>
+	<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/fdw_header.js"></script>
+
+
+<link rel="alternate" type="application/rss+xml" title="Foros del Web RSS Feed" href="http://www.forosdelweb.com/external.php?type=RSS2">
+	
+		<link rel="alternate" type="application/rss+xml" title="Foros del Web - SQL Server - RSS Feed" href="http://www.forosdelweb.com/external.php?type=RSS2&amp;forumids=87">
+	
+
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/google_service.js"></script>
+<script type="text/javascript">try{GS_googleAddAdSenseService("ca-pub-0070781738361811");GS_googleEnableAllServices();}catch(err){}</script><script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/google_ads.js"></script>
+<script language="JavaScript">try{
+GA_googleAddAttr("usergroup", "1");GA_googleAddAttr("script", "showthread");
+GA_googleAddAttr("Forum", "__SQL_Server"); 
+}catch(err){}
+</script> 
+<script type="text/javascript">try{GA_googleAddSlot("ca-pub-0070781738361811","FDW_Adsense_mensajes_300x250");
+GA_googleAddSlot("ca-pub-0070781738361811","FDW_Leaderboard_general_728x90");
+GA_googleAddSlot("ca-pub-0070781738361811","FDW_Sidebar_125");
+GA_googleAddSlot("ca-pub-0070781738361811", "FDW_Sidebar_125b");GA_googleAddSlot("ca-pub-0070781738361811","FDW_Sidebar_125c");GA_googleAddSlot("ca-pub-0070781738361811","FDW_Survey");}catch(err){}</script>
+<script type="text/javascript">try{GA_googleFetchAds();}catch(err){}</script>
+<script type="text/javascript">window.google_analytics_uacct="UA-309831-5";</script>
+<link rel="search" type="application/opensearchdescription+xml" href="http://www.forosdelweb.com/util/fdwSearchEnginePlugin.xml" title="Buscar en Foros del Web"><script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/vbulletin_quickreport.js"></script>
+
+<style type="text/css">
+/* ***** red and green boxes for username verification used during registration ***** */
+.headmenu div.greenbox { border: 1px solid #337733; background: #bbffbb; color: #337733; padding: 3px; }
+.headmenu div.redbox { border:1px solid #773333; background: #ffbbbb; color: #773333; padding: 3px; }
+</style>
+
+
+	<title> Funcion SQL Server similar al group_concat() de MySQL - Foros del Web</title>
+	<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/vbulletin_post_loader.js"></script>
+	<style type="text/css" id="vbulletin_showthread_css">
+	<!--
+	
+	#links div { white-space: nowrap; }
+	#links img { vertical-align: middle; }
+	-->
+	</style>
+<script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/XFBML.js" type="text/javascript"></script><link href="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/connect-css.css" type="text/css" rel="stylesheet"><script async="true" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/ga.js"></script></head><body onload="">
+<a name="top"></a>
+
+<div id="content_head"><!-- CONTENT HEAD -->
+	<div id="head"><!-- HEAD -->
+		<div id="select_web">
+			<h1><a id="logo" href="http://www.forosdelweb.com/" class="foros_del_web">Foros del web, comunidad de entusiastas web<span></span></a></h1>
+
+		</div>
+	
+	<div id="search_head"><!-- SEARCH HEAD -->
+		<form action="http://www.forosdelweb.com/search.php">
+			<input name="cx" value="003443319247910514836:k3yjoy5uums" type="hidden">
+			<input name="cof" value="FORID:10" type="hidden">
+			<input name="ie" value="ISO 8859-1" type="hidden">
+			<input class="search" name="q" id="s" type="text">
+			<input class="search_button" value="" name="sa" id="sm" type="submit">
+		</form>
+	</div><!-- /SEARCH HEAD -->
+	
+	<ul id="nav"><!-- NAV -->
+		<li><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/?nojs=1#community" rel="nofollow" class="menulink" id="community">Comunidad</a></li>
+		<li><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" class="menulink" id="learn">Aprende</a></li>
+		<li><a href="http://www.forosdelweb.com/register.php" rel="nofollow">Registrarse</a></li>
+	</ul><!-- /NAV -->
+	
+	<div id="user_head"><!-- USER HEAD -->
+		
+			<img title="avatar" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/unknown.gif" alt="avatar">
+			<p><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" class="user_select" id="loginform">Iniciar Sesión</a></p>
+		
+	</div><!-- /USER HEAD -->
+	
+</div><!-- /HEAD -->
+
+</div><!-- /CONTENT HEAD -->
+<div id="head_spacer" style="display: none; margin: 0pt; padding: 0pt; height: 40px;"></div><script type="text/javascript">fdwHeader.init();</script>
+
+
+<div style="position: absolute;" id="logo_menu" class="headmenu">
+	<ul>
+		<li><a href="http://www.forosdelweb.com/">Portada Foros del Web</a></li>
+		<li><a href="http://www.maestrosdelweb.com/">Maestros del Web</a></li>
+		<li><a href="http://twitter.com/forosdelweb">Foros del Web en Twitter</a></li>
+		<li><a href="http://facebook.com/forosdelweb">Foros del Web en Facebook</a></li>
+	</ul>
+</div>
+<script type="text/javascript">fdwMenus.register("logo", false, false, true);</script>
+
+<div style="position: absolute;" id="community_menu" class="headmenu">
+	<ul>
+	
+		<li><a href="http://www.forosdelweb.com/f74/historia-foros-del-web-298902/">Historia del foro</a></li>
+		<li><a href="http://www.forosdelweb.com/search.php?do=getdaily">Temas de Hoy</a></li>
+		<li><a href="http://www.forosdelweb.com/showgroups.php" title="Ver Líderes del Foro">Líderes</a></li>
+	<li><a href="http://www.forosdelweb.com/miembros/listado">Miembros</a></li>
+		
+	
+		<li><a href="http://www.forosdelweb.com/group.php">Grupos Sociales</a></li>
+		<li><a href="http://fdw.li/fdwpoliticas" title="Políticas de uso de Foros del Web">Políticas</a></li>
+
+
+	</ul>
+</div>
+<script type="text/javascript">fdwMenus.register("community", true);</script>
+
+
+<div style="position: absolute;" id="loginform_menu" class="headmenu">
+	<div class="menucontent" style="width: 200px;">
+		<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/vbulletin_md5.js"></script>
+		<form action="http://www.forosdelweb.com/login.php?do=login" method="post" onsubmit="md5hash(vb_login_password, vb_login_md5password, vb_login_md5password_utf, 0)">
+			<input name="s" value="" type="hidden">
+			<input name="securitytoken" value="guest" type="hidden">
+			<input name="do" value="login" type="hidden">
+			<input name="vb_login_md5password" type="hidden">
+			<input name="vb_login_md5password_utf" type="hidden">
+			
+			<p style="text-align: left;">
+				<label for="navbar_username" style="display: block; width: 100px; float: left;">Usuario: </label>
+				<input style="" name="vb_login_username" id="navbar_username" size="10" accesskey="u" tabindex="101" value="Usuario" onfocus="if (this.value == 'Usuario') this.value = '';" type="text">
+				</p><div class="clear"></div>
+			
+			<p style="text-align: left;">
+				<label for="navbar_password" style="display: block; width: 100px; float: left;">Contraseña: </label>
+				<input name="vb_login_password" id="navbar_password" size="10" tabindex="102" type="password">
+				</p><div class="clear"></div>
+			
+			<p>
+				<label for="cb_cookieuser_navbar"><input name="cookieuser" value="1" tabindex="103" id="cb_cookieuser_navbar" accesskey="c" type="checkbox">¿Recordarme?</label>
+				</p><div class="clear"></div>
+			
+			<input value="Iniciar Sesión" tabindex="104" title="Escribe tu nombre de usuario y contraseña en los campos para iniciar la sesión o pulsa el botón 'registrarse' para crear un perfil." accesskey="s" type="submit">
+		</form>
+		<div style="background-color: rgb(254, 247, 219); text-align: center; margin-top: 5px;">
+				<p style="font-size: 11px;">También puedes iniciar sesión con:</p>
+			<!-- fbconnect -->
+				<span class="fbconnect" style="height: 21px; padding: 2px;"><a href="#" onclick="facebook_requestSession(); return false;"><img id="fb_login_image" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/connect_light_medium_long.gif" alt="Connect" border="0"></a></span>
+			<!-- / fbconnect -->		
+		</div>				
+	</div>
+</div>
+<script type="text/javascript">fdwMenus.register("loginform", true);</script>
+
+<div style="position: absolute;" id="learn_menu" class="headmenu">
+	<ul>
+		<li><a href="http://www.forosdelweb.com/wiki/Categor%C3%ADa:Manuales" title="Manuales de PHP, Javascript, etc.">Manuales y tutoriales</a></li>
+		<li><a href="http://www.forosdelweb.com/wiki/" title="Wiki">Wiki del foro</a></li>
+		<li><a href="http://www.forosdelweb.com/wiki/Categor%C3%ADa:Glosario" title="Glosario Wiki">Glosario</a></li>
+		<li><a href="http://www.forosdelweb.com/wiki/Faqs" title="Preguntas frecuentes">FAQ</a></li>
+		<li><a href="http://www.forosdelweb.com/faq.php" title="Preguntas y ayuda a usuarios">Ayuda</a></li>
+	</ul>
+</div>
+<script type="text/javascript">fdwMenus.register("learn", true);</script>
+
+
+
+<!-- breadcrumb, login, pm info -->
+<table align="center" border="0" cellpadding="6" cellspacing="1" width="100%">
+<tbody><tr>
+	<td class="alt1" width="100%">
+		
+			<table border="0" cellpadding="0" cellspacing="0">
+			<tbody><tr valign="bottom">
+				<td><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" onclick="history.back(1);return false;" title="Retroceder" id="navbits_start"></a></td>
+				<td>&nbsp;</td>
+				<td width="100%"><span class="navbar"><a href="http://www.forosdelweb.com/" accesskey="1">Foros del Web</a></span> 
+	<span class="navbar">» <a href="http://www.forosdelweb.com/f39/">Programación para sitios web</a></span>
+
+
+	<span class="navbar">» <a href="http://www.forosdelweb.com/f21/">Bases de Datos</a></span>
+
+
+	<span class="navbar">» <a href="http://www.forosdelweb.com/f87/">SQL Server</a></span>
+
+</td>
+			</tr>
+			<tr>
+				<td class="navbar" colspan="3"><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/" id="navbits_finallink_ltr" title="Actualizar esta página"></a> <strong>
+	 Funcion SQL Server similar al group_concat() de MySQL
+
+</strong></td>
+			</tr>
+			</tbody></table>
+		
+	</td>
+<!--/* Zona Botón NavBar */-->
+
+</tr>
+</tbody></table>
+<!-- / breadcrumb, login, pm info -->
+
+
+
+<div style="padding: 0pt 0pt 10px;" align="center">
+<script type="text/javascript">try{GA_googleFillSlot("FDW_Leaderboard_general_728x90");}catch(err){}</script><script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/ads"></script><div id="google_ads_div_FDW_Leaderboard_general_728x90">
+<ins style="width: 728px; height: 90px; border: 0pt none; display: inline-table; position: relative;"><ins style="width: 728px; height: 90px; border: 0pt none; display: block; position: relative;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_FDW_Leaderboard_general_728x90" id="google_ads_iframe_FDW_Leaderboard_general_728x90" frameborder="0" height="90" scrolling="no" width="728"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe('google_ads_div_FDW_Leaderboard_general_728x90' ,'FDW_Leaderboard_general_728x90');</script>
+</div>
+
+
+
+
+
+<div style="padding: 10px; border-top-width: 0px;"> 
+
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/fdw_register_form.js"></script>
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/fdw_ajax_eval.js"></script>
+<script type="text/javascript">
+(function() { for (i=0,elems=document.getElementById("nav").getElementsByTagName("a");elem=elems[i];i++) { if (elem.href.indexOf("register.php") > -1) { fdwRegisterForm.init(elem) } } })();
+fdwRegisterForm.__show=fdwRegisterForm.show;fdwRegisterForm.show=function(){this.menu.className="headmenu";this.menu.style.width="360px";this.__show();fdwMenus.hide();};
+fdwMenus.__show=fdwMenus.show;fdwMenus.show=function(menuid){fdwRegisterForm.hide();this.__show(menuid);};
+</script>
+
+
+
+
+
+
+
+
+
+<a name="poststop" id="poststop"></a>
+
+<!-- controls above postbits -->
+<table style="margin-bottom: 3px;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr valign="bottom">
+	
+		<td class="smallfont"><a href="http://www.forosdelweb.com/newreply.php?do=newreply&amp;noquote=1&amp;p=3446894" rel="nofollow"><img title="Respuesta" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/reply.gif" alt="Respuesta" border="0"></a></td>
+	
+	
+</tr>
+</tbody></table>
+<!-- / controls above postbits -->
+
+<!-- toolbar -->
+<table class="tborder" style="border-bottom-width: 0px;" align="center" border="0" cellpadding="6" cellspacing="1">
+<tbody><tr>
+	<td class="tcat" width="100%">
+		<div class="smallfont">
+		
+		&nbsp;
+		</div>
+	</td>
+	<td style="cursor: pointer;" class="vbmenu_control" id="threadtools" nowrap="nowrap">
+		<a rel="nofollow" href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/?nojs=1#goto_threadtools">Herramientas</a>
+		<script type="text/javascript"> vbmenu_register("threadtools"); </script> <img alt="" title="" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/menu_open.gif" border="0">
+	</td>
+	
+	
+	<td style="cursor: pointer;" class="vbmenu_control" id="displaymodes" nowrap="nowrap">
+		<a rel="nofollow" href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/?nojs=1#goto_displaymodes">Desplegado</a>
+		<script type="text/javascript"> vbmenu_register("displaymodes"); </script> <img alt="" title="" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/menu_open.gif" border="0">
+	</td>
+	
+
+	
+
+</tr>
+</tbody></table>
+<!-- / toolbar -->
+
+
+
+<!-- end content table -->
+
+		</div>
+	
+
+
+<!-- / close content container -->
+<!-- / end content table -->
+
+
+
+
+
+<div id="posts"><!-- post #3446894 -->
+
+	<!-- open content container -->
+
+<div align="center">
+	<div class="page" style="width: 100%; text-align: left;">
+		<div style="padding: 0px 25px;" align="left">
+
+	<div id="edit3446894" style="padding: 0px 0px 6px;">
+	<!-- this is not the last post shown on the page -->
+
+
+
+<table id="post3446894" class="tborder group-12 post_back" align="center" border="0" cellpadding="6" cellspacing="0" width="100%">
+<tbody><tr>
+	
+		<td class="thead" style="font-weight: normal; border-width: 1px 0px 1px 1px; border-style: solid none solid solid; border-color: rgb(255, 255, 255) -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255); width: 194px;">
+			<!-- status icon and date -->
+			<a name="post3446894"><img title="Antiguo" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/post_old.gif" alt="Antiguo" border="0"></a>
+			16-jun-2010, 19:56
+			
+			<!-- / status icon and date -->
+		</td>
+		<td class="thead" style="font-weight: normal; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) -moz-use-text-color;" align="right">
+			&nbsp;
+			#<a href="http://www.forosdelweb.com/3446894-post1.html" target="new" id="postcount3446894" name="1"><strong>1</strong></a> (<b><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#post3446894" title="Enlace a este post">permalink</a></b>)
+			
+		</td>
+	
+</tr>
+<tr valign="top">
+	<td class="alt2 pbit" style="border-right: 1px solid rgb(255, 255, 255); border-left: 1px solid rgb(255, 255, 255); border-width: 0px 1px; border-style: none solid; border-color: -moz-use-text-color rgb(255, 255, 255);" width="175">
+
+			<div id="postmenu_3446894">
+				
+				<a rel="nofollow" class="bigusername" href="http://www.forosdelweb.com/miembros/joacoff/"><!-- google_ad_section_start(weight=ignore) -->joacoff<!-- google_ad_section_end --></a>
+				
+				
+			</div>
+
+
+			
+			
+			
+
+			
+				<div class="smallfont"><a rel="nofollow" href="http://www.forosdelweb.com/miembros/joacoff/"><img title="joacoff (Reg: octubre-2009)" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/161432_1496206815_3204219_t.jpg" alt="joacoff (Reg: octubre-2009)" border="0"></a>
+
+
+
+
+				</div>
+			
+
+			<div class="smallfont">
+				&nbsp;<br>
+
+<strong>Mensajes: 66</strong>
+
+<div>Karma: 34 </div>
+
+				<div>Ubicación: Cordoba</div>
+				
+				<div>
+					
+				</div>
+				
+				
+				
+				
+<!-- controls -->
+<div style="margin-top: 5px;">
+	    
+
+		<img title="joacoff está desconectado" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/user_offline.gif" alt="joacoff está desconectado" border="0">
+
+
+		
+		
+		
+		
+
+<!-- end controls -->
+</div>
+			</div>
+
+	</td>
+	
+	<td class="alt1" id="td_post_3446894" style="border-right: 1px solid rgb(255, 255, 255);">
+	
+		
+		
+			<!-- icon and title -->
+			<div class="smallfont">
+				
+				<strong><!-- google_ad_section_start -->Funcion SQL Server similar al group_concat() de MySQL<!-- google_ad_section_end --></strong>
+			</div>
+			<hr style="color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);" size="1">
+			<!-- / icon and title -->
+		
+
+		<!-- message -->
+		<div class="post_content" id="post_message_3446894">
+
+	
+
+<div style="float: left; padding: 10px;">
+<script type="text/javascript">
+GA_googleFillSlot("FDW_Adsense_mensajes_300x250");
+</script><script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/ads_002"></script><div id="google_ads_div_FDW_Adsense_mensajes_300x250">
+<ins style="width: 300px; height: 250px; border: 0pt none; display: inline-table; position: relative;"><ins style="width: 300px; height: 250px; border: 0pt none; display: block; position: relative;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_FDW_Adsense_mensajes_300x250" id="google_ads_iframe_FDW_Adsense_mensajes_300x250" frameborder="0" height="250" scrolling="no" width="300"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe('google_ads_div_FDW_Adsense_mensajes_300x250' ,'FDW_Adsense_mensajes_300x250');</script></div>
+	
+			
+			<!-- google_ad_section_start -->Hola chicos hace tiempo que no posteaba pero necesito ayuda y no pude encontrar por ningun lado esto:<br>
+Estoy haciendo para la facultad un programa inmobiliario e imprimo los 
+datos contrato de alquiler con crystal report, la cuestion es que los 
+datos de un solo contrato son muchos y me ocupan dos secciones informes 
+por lo que necesariamente tengo que incluir todos los datos en la misma 
+tabla que tiene un solo resultado. Uno de los datos es todos los 
+servicios que posee la propiedad los cuales estan en una tabla cruzada y
+ pueden ser desde 0 hasta varias decenas, resumiendo tengo una consulta 
+que funciona perfecto y que accede a unas 9 tablas pero no contempla los
+ servicios por que necesito todos ellos en una misma variable.<br>
+En MySQL esto se puede hacer facilmente con group_concat() y un group by pero en SQL Server no pude encontrar nada parecido.<!-- google_ad_section_end -->
+		</div>
+		<!-- / message -->
+
+		
+
+		
+		
+
+		
+
+		
+
+		
+
+	</td>
+</tr>
+<tr>
+	<td class="alt2" style="border-right: 1px solid rgb(255, 255, 255); border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255);">
+		&nbsp;
+	</td>
+	
+	<td class="alt1" style="border-right: 1px solid rgb(255, 255, 255); border-width: 0px 1px 1px 0px; border-style: none solid solid none; border-color: -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255) -moz-use-text-color;" align="right">
+	
+		<!-- controls -->
+		
+		
+		
+			<a href="http://www.forosdelweb.com/newreply.php?do=newreply&amp;p=3446894" rel="nofollow"><img title="Responder Citando" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/quote.gif" alt="Responder Citando" border="0"></a>
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		<!-- / controls -->
+	</td>
+</tr>
+</tbody></table>
+
+
+<!-- post 3446894 popup menu -->
+
+<!-- / post 3446894 popup menu -->
+<script type="text/javascript">vbreport_register("3446894");</script>
+
+
+	</div>
+	
+		</div>
+	</div>
+</div>
+
+<!-- / close content container -->
+
+<!-- / post #3446894 -->	
+<div style="padding: 0px 25px 6px;">
+<table class="tborder" align="center" border="0" cellpadding="6" cellspacing="1" width="100%">
+<tbody>
+
+<tr>
+	<td class="alt1">
+<script type="text/javascript"><!--
+google_ad_client = "pub-0070781738361811";
+/* 728x90 Msg Fdw */
+google_ad_slot = "0974121824";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/show_ads.js">
+</script><script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/show_ads_impl.js"></script><script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/expansion_embed.js"></script><script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/test_domain.js"></script><script>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</script><ins style="display: inline-table; border: medium none; height: 90px; margin: 0pt; padding: 0pt; position: relative; visibility: visible; width: 728px;"><ins id="google_ads_frame3_anchor" style="display: block; border: medium none; height: 90px; margin: 0pt; padding: 0pt; position: relative; visibility: visible; width: 728px;"><iframe allowtransparency="true" hspace="0" id="google_ads_frame3" marginheight="0" marginwidth="0" name="google_ads_frame" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/ads.htm" style="left: 0pt; position: absolute; top: 0pt;" vspace="0" frameborder="0" height="90" scrolling="no" width="728"></iframe></ins></ins>
+	</td>
+</tr>
+</tbody></table>
+</div>
+	<!-- post #3447053 -->
+
+	<!-- open content container -->
+
+<div align="center">
+	<div class="page" style="width: 100%; text-align: left;">
+		<div style="padding: 0px 25px;" align="left">
+
+	<div id="edit3447053" style="padding: 0px 0px 6px;">
+	<!-- this is not the last post shown on the page -->
+
+
+
+<table id="post3447053" class="tborder group-12 post_back" align="center" border="0" cellpadding="6" cellspacing="0" width="100%">
+<tbody><tr>
+	
+		<td class="thead" style="font-weight: normal; border-width: 1px 0px 1px 1px; border-style: solid none solid solid; border-color: rgb(255, 255, 255) -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255); width: 194px;">
+			<!-- status icon and date -->
+			<a name="post3447053"><img title="Antiguo" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/post_old.gif" alt="Antiguo" border="0"></a>
+			16-jun-2010, 23:02
+			
+			<!-- / status icon and date -->
+		</td>
+		<td class="thead" style="font-weight: normal; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) -moz-use-text-color;" align="right">
+			&nbsp;
+			#<a href="http://www.forosdelweb.com/3447053-post2.html" target="new" id="postcount3447053" name="2"><strong>2</strong></a> (<b><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#post3447053" title="Enlace a este post">permalink</a></b>)
+			
+		</td>
+	
+</tr>
+<tr valign="top">
+	<td class="alt2 pbit" style="border-right: 1px solid rgb(255, 255, 255); border-left: 1px solid rgb(255, 255, 255); border-width: 0px 1px; border-style: none solid; border-color: -moz-use-text-color rgb(255, 255, 255);" width="175">
+
+			<div id="postmenu_3447053">
+				
+				<a rel="nofollow" class="bigusername" href="http://www.forosdelweb.com/miembros/joacoff/"><!-- google_ad_section_start(weight=ignore) -->joacoff<!-- google_ad_section_end --></a>
+				
+				
+			</div>
+
+
+			
+			
+			
+
+			
+				<div class="smallfont"><a rel="nofollow" href="http://www.forosdelweb.com/miembros/joacoff/"><img title="joacoff (Reg: octubre-2009)" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/161432_1496206815_3204219_t.jpg" alt="joacoff (Reg: octubre-2009)" border="0"></a>
+
+
+
+
+				</div>
+			
+
+			<div class="smallfont">
+				&nbsp;<br>
+
+<strong>Mensajes: 66</strong>
+
+<div>Karma: 34 </div>
+
+				<div>Ubicación: Cordoba</div>
+				
+				<div>
+					
+				</div>
+				
+				
+				
+				
+<!-- controls -->
+<div style="margin-top: 5px;">
+	    
+
+		<img title="joacoff está desconectado" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/user_offline.gif" alt="joacoff está desconectado" border="0">
+
+
+		
+		
+		
+		
+
+<!-- end controls -->
+</div>
+			</div>
+
+	</td>
+	
+	<td class="alt1" id="td_post_3447053" style="border-right: 1px solid rgb(255, 255, 255);">
+	
+		
+		
+			<!-- icon and title -->
+			<div class="smallfont">
+				
+				<strong><!-- google_ad_section_start -->Respuesta: Funcion SQL Server similar al group_concat() de MySQL<!-- google_ad_section_end --></strong>
+			</div>
+			<hr style="color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);" size="1">
+			<!-- / icon and title -->
+		
+
+		<!-- message -->
+		<div class="post_content" id="post_message_3447053">
+
+	
+			
+			<!-- google_ad_section_start -->Bueno gente el problema era 
+apremiante asi que busque por el lado del codigo, si es con VB hay que 
+clonar una tabla, concatenar los resultados en la tabla clon en una sola
+ fila y en el load del dataset pasar la tabla con la funcion 
+createdatareader.<br>
+Queda para mas adelante encontrar la funcion si es que existe.<!-- google_ad_section_end -->
+		</div>
+		<!-- / message -->
+
+		
+
+		
+		
+
+		
+
+		
+
+		
+
+	</td>
+</tr>
+<tr>
+	<td class="alt2" style="border-right: 1px solid rgb(255, 255, 255); border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255);">
+		&nbsp;
+	</td>
+	
+	<td class="alt1" style="border-right: 1px solid rgb(255, 255, 255); border-width: 0px 1px 1px 0px; border-style: none solid solid none; border-color: -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255) -moz-use-text-color;" align="right">
+	
+		<!-- controls -->
+		
+		
+		
+			<a href="http://www.forosdelweb.com/newreply.php?do=newreply&amp;p=3447053" rel="nofollow"><img title="Responder Citando" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/quote.gif" alt="Responder Citando" border="0"></a>
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		<!-- / controls -->
+	</td>
+</tr>
+</tbody></table>
+
+
+<!-- post 3447053 popup menu -->
+
+<!-- / post 3447053 popup menu -->
+<script type="text/javascript">vbreport_register("3447053");</script>
+
+
+	</div>
+	
+		</div>
+	</div>
+</div>
+
+<!-- / close content container -->
+
+<!-- / post #3447053 --><!-- post #3447929 -->
+
+	<!-- open content container -->
+
+<div align="center">
+	<div class="page" style="width: 100%; text-align: left;">
+		<div style="padding: 0px 25px;" align="left">
+
+	<div id="edit3447929" style="padding: 0px 0px 6px;">
+	
+
+
+
+<table id="post3447929" class="tborder group-12 post_back" align="center" border="0" cellpadding="6" cellspacing="0" width="100%">
+<tbody><tr>
+	
+		<td class="thead" style="font-weight: normal; border-width: 1px 0px 1px 1px; border-style: solid none solid solid; border-color: rgb(255, 255, 255) -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255); width: 194px;">
+			<!-- status icon and date -->
+			<a name="post3447929"><img title="Antiguo" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/post_old.gif" alt="Antiguo" border="0"></a>
+			17-jun-2010, 12:40
+			
+			<!-- / status icon and date -->
+		</td>
+		<td class="thead" style="font-weight: normal; border-width: 1px 1px 1px 0px; border-style: solid solid solid none; border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) -moz-use-text-color;" align="right">
+			&nbsp;
+			#<a href="http://www.forosdelweb.com/3447929-post3.html" target="new" id="postcount3447929" name="3"><strong>3</strong></a> (<b><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#post3447929" title="Enlace a este post">permalink</a></b>)
+			
+		</td>
+	
+</tr>
+<tr valign="top">
+	<td class="alt2 pbit" style="border-right: 1px solid rgb(255, 255, 255); border-left: 1px solid rgb(255, 255, 255); border-width: 0px 1px; border-style: none solid; border-color: -moz-use-text-color rgb(255, 255, 255);" width="175">
+
+			<div id="postmenu_3447929">
+				
+				<a rel="nofollow" class="bigusername" href="http://www.forosdelweb.com/miembros/flaviovich/"><!-- google_ad_section_start(weight=ignore) -->flaviovich<!-- google_ad_section_end --></a>
+				
+				
+			</div>
+
+
+			
+			
+			
+
+			
+				<div class="smallfont"><a rel="nofollow" href="http://www.forosdelweb.com/miembros/flaviovich/"><img title="flaviovich (Reg: agosto-2005)" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/avatar111817_1.gif" alt="flaviovich (Reg: agosto-2005)" border="0" height="50" width="39"></a>
+
+
+
+
+				</div>
+			
+
+			<div class="smallfont">
+				&nbsp;<br>
+
+<strong>Mensajes: 2.759</strong>
+
+<div>Karma: 479 </div>
+
+				<div>Ubicación: Lima, Peru</div>
+				
+				<div>
+					
+				</div>
+				
+				
+				
+				
+<!-- controls -->
+<div style="margin-top: 5px;">
+	<a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" onclick="imwindow('icq', '111817', 500, 450); return false;"><img title="Enviar un mensaje por ICQ a flaviovich" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/im_icq.gif" alt="Enviar un mensaje por ICQ a flaviovich" border="0"></a>  <a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" onclick="imwindow('msn', '111817', 400, 200); return false;"><img title="Enviar un mensaje por MSN a flaviovich" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/im_msn.gif" alt="Enviar un mensaje por MSN a flaviovich" border="0"></a>  <a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" onclick="imwindow('skype', '111817', 400, 285); return false;"><img title="Enviar un mensaje por Skype&#8482; a flaviovich" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/flaviovich.png" alt="Enviar un mensaje por Skype&#8482; a flaviovich" border="0"></a>
+
+		
+<img title="flaviovich esta en línea ahora" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/user_online.gif" alt="flaviovich esta en línea ahora" border="0">
+
+		
+		
+		
+		
+
+<!-- end controls -->
+</div>
+			</div>
+
+	</td>
+	
+	<td class="alt1" id="td_post_3447929" style="border-right: 1px solid rgb(255, 255, 255);">
+	
+		
+		
+			<!-- icon and title -->
+			<div class="smallfont">
+				
+				<strong><!-- google_ad_section_start -->Respuesta: Funcion SQL Server similar al group_concat() de MySQL<!-- google_ad_section_end --></strong>
+			</div>
+			<hr style="color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);" size="1">
+			<!-- / icon and title -->
+		
+
+		<!-- message -->
+		<div class="post_content" id="post_message_3447929">
+
+	
+			
+			<!-- google_ad_section_start -->Creo que esta funcion puede ayudar:<style type="text/css">@import url("http://static.forosdelweb.com/clientscript/vbulletin_css/geshi.css");</style>
+<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/geshi.js"></script>
+<div class="geshibox">
+Código SQL:
+<pre class="alt2" style="height: 276px;"><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" onclick="veroriginal(this);return false;" class="tool" title="Ver código original en un popup">Ver original</a><a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#" onclick="copiar(this);return false;" class="tool" title="Copiar código al porta papeles">Copiar</a><div dir="ltr" style="text-align: left;"><div class="sql sql" style="font-family: monospace;"><ol><li class="li1"><div class="de1"><span class="kw1">CREATE</span> <span class="kw1">FUNCTION</span> dbo<span class="sy0">.</span>TEMP_ConcatSample_V4<span class="br0">(</span>@ID int<span class="br0">)</span></div></li><li class="li2"><div class="de2">RETURNS VARCHAR<span class="br0">(</span><span class="nu0">8000</span><span class="br0">)</span></div></li><li class="li1"><div class="de1"><span class="kw1">AS</span></div></li><li class="li2"><div class="de2">BEGIN</div></li><li class="li1"><div class="de1">DECLARE @strOutput VARCHAR<span class="br0">(</span><span class="nu0">8000</span><span class="br0">)</span></div></li><li class="li2"><div class="de2">&nbsp;</div></li><li class="li1"><div class="de1">&nbsp; &nbsp; <span class="kw1">SET</span> @strOutput <span class="sy0">=</span> <span class="st0">''</span></div></li><li class="li2"><div class="de2">&nbsp;</div></li><li class="li1"><div class="de1">&nbsp; &nbsp; <span class="kw1">SELECT</span>&nbsp; @strOutput <span class="sy0">=</span> @strOutput <span class="sy0">+</span> <span class="st0">','</span> <span class="sy0">+</span> <span class="br0">[</span>Code<span class="br0">]</span></div></li><li class="li2"><div class="de2">&nbsp; &nbsp; <span class="kw1">FROM</span>&nbsp; &nbsp; dbo<span class="sy0">.</span>TEMP_SAMPLE</div></li><li class="li1"><div class="de1">&nbsp; &nbsp; <span class="kw1">WHERE</span> &nbsp; <span class="br0">[</span>ID<span class="br0">]</span> <span class="sy0">=</span> @ID</div></li><li class="li2"><div class="de2">&nbsp; &nbsp; <span class="kw1">ORDER</span> <span class="kw1">BY</span> <span class="br0">[</span>Code<span class="br0">]</span></div></li><li class="li1"><div class="de1">&nbsp;</div></li><li class="li2"><div class="de2">&nbsp; &nbsp; <span class="kw1">RETURN</span> STUFF<span class="br0">(</span>@strOutput<span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="st0">''</span><span class="br0">)</span></div></li><li class="li1"><div class="de1">END</div></li></ol></div></div></pre>
+</div>Fuente: <a href="http://www.sqlteam.com/forums/topic.asp?TOPIC_ID=81254" target="_blank">http://www.sqlteam.com/forums/topic.asp?TOPIC_ID=81254</a><!-- google_ad_section_end -->
+		</div>
+		<!-- / message -->
+
+		
+
+		
+		
+
+		
+		<!-- sig -->
+			<div>
+				__________________<br>
+				<!-- google_ad_section_start(weight=ignore) -->No repitamos temas, usemos el <a href="http://www.forosdelweb.com/search.php" target="_blank">Motor de busquedas</a><br>
+Plantea bien tu problema: <b>Ayúdanos a ayudarte</b>.<!-- google_ad_section_end -->
+			</div>
+		<!-- / sig -->
+		
+
+		
+
+		
+
+	</td>
+</tr>
+<tr>
+	<td class="alt2" style="border-right: 1px solid rgb(255, 255, 255); border-width: 0px 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255);">
+		&nbsp;
+	</td>
+	
+	<td class="alt1" style="border-right: 1px solid rgb(255, 255, 255); border-width: 0px 1px 1px 0px; border-style: none solid solid none; border-color: -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255) -moz-use-text-color;" align="right">
+	
+		<!-- controls -->
+		
+		
+		
+			<a href="http://www.forosdelweb.com/newreply.php?do=newreply&amp;p=3447929" rel="nofollow"><img title="Responder Citando" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/quote.gif" alt="Responder Citando" border="0"></a>
+		
+		
+		
+		
+		
+		
+		
+			
+		
+		
+		<!-- / controls -->
+	</td>
+</tr>
+</tbody></table>
+
+
+<!-- post 3447929 popup menu -->
+
+<!-- / post 3447929 popup menu -->
+<script type="text/javascript">vbreport_register("3447929");</script>
+
+
+	</div>
+	
+		</div>
+	</div>
+</div>
+
+<!-- / close content container -->
+
+<!-- / post #3447929 --><div id="lastpost"></div></div>
+
+<!-- start content table -->
+<!-- open content container -->
+
+<div align="center">
+	<div class="page" style="width: 100%; text-align: left;">
+		<div style="padding: 0px 25px;" align="left">
+
+<!-- / start content table -->
+
+<!-- controls below postbits -->
+<table style="margin-top: -3px;" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr valign="top">
+	
+		<td class="smallfont"><a href="http://www.forosdelweb.com/newreply.php?do=newreply&amp;noquote=1&amp;p=3447929" rel="nofollow"><img title="Respuesta" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/reply.gif" alt="Respuesta" border="0"></a></td>
+	
+	
+</tr>
+</tbody></table>
+<!-- / controls below postbits -->
+
+
+
+
+
+
+
+<!-- thread rate -->
+<div id="fdwvote_817105" class="tborder" style="width: 500px; margin: 0pt auto; display: none;">
+	<div id="fdwvote_817105_i" style="padding: 10px;" class="alt2">
+		
+		
+	</div>
+</div>  
+
+
+
+
+
+<!-- lightbox scripts -->
+	<script type="text/javascript" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/vbulletin_lightbox.js"></script>
+	<script type="text/javascript">
+	<!--
+	vBulletin.register_control("vB_Lightbox_Container", "posts", 1);
+	//-->
+	</script>
+<!-- / lightbox scripts -->
+
+
+
+
+
+
+<div id="old_thread" align="center">Atención: Estás leyendo un tema que 
+no tiene actividad desde hace más de 6 MESES, te recomendamos abrir un 
+Nuevo tema en lugar de responder al actual.</div>
+
+
+
+
+<!-- next / previous links -->
+	<br>
+	<div class="smallfont" align="center">
+		<strong>«</strong>
+			<a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105-prev/" rel="nofollow">Tema Anterior</a>
+			|
+			<a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105-next/" rel="nofollow">Próximo Tema</a>
+		<strong>»</strong>
+	</div>
+<!-- / next / previous links -->
+
+
+
+
+
+
+
+<!-- popup menu contents -->
+<br>
+
+<!-- thread tools menu -->
+<div class="vbmenu_popup" id="threadtools_menu" style="display: none;">
+<form action="http://www.forosdelweb.com/postings.php?t=817105&amp;pollid=" method="post" name="threadadminform">
+	<table border="0" cellpadding="4" cellspacing="1">
+	<tbody><tr>
+		<td class="thead">Herramientas<a name="goto_threadtools"></a></td>
+	</tr>
+	<tr>
+		<td class="vbmenu_option"><img title="Mostrar Versión Imprimible" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/printer.gif" alt="Mostrar Versión Imprimible"> <a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105-print/" accesskey="3" rel="nofollow">Mostrar Versión Imprimible</a></td>
+	</tr>
+	
+	<tr>
+		<td class="vbmenu_option"><img title="Enviar por Correo" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/sendtofriend.gif" alt="Enviar por Correo"> <a href="http://www.forosdelweb.com/sendmessage.php?do=sendtofriend&amp;t=817105" rel="nofollow">Enviar por Correo</a></td>
+	</tr>
+	
+	
+	
+	
+	</tbody></table>
+</form>
+</div>
+<!-- / thread tools menu -->
+
+<!-- **************************************************** -->
+
+<!-- thread display mode menu -->
+<div class="vbmenu_popup" id="displaymodes_menu" style="display: none;">
+	<table border="0" cellpadding="4" cellspacing="1">
+	<tbody><tr>
+		<td class="thead">Desplegado<a name="goto_displaymodes"></a></td>
+	</tr>
+	<tr>
+	
+		<td class="vbmenu_option" title="nohilite"><img title="Modo lineal" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/mode_linear.gif" alt="Modo lineal"> <strong>Modo lineal</strong></td>
+	
+	</tr>
+	<tr>
+	
+		<td class="vbmenu_option"><img title="Modo Híbrido" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/mode_hybrid.gif" alt="Modo Híbrido"> <a rel="nofollow" href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/?mode=hybrid">Cambiar a Modo Hibrido</a></td>
+	
+	</tr>
+	<tr>
+	
+		<td class="vbmenu_option"><img title="Modo Hilado" class="inlineimg" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/mode_threaded.gif" alt="Modo Hilado"> <a rel="nofollow" href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/?mode=threaded#post3446894">Cambiar a Modo Hilado</a></td>
+	
+	</tr>
+	</tbody></table>
+</div>
+<!-- / thread display mode menu -->
+
+<!-- **************************************************** -->
+
+
+
+
+
+<!-- / popup menu contents -->
+
+
+<!-- forum rules and admin links -->
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr valign="bottom">
+	<td valign="top" width="100%">
+		<table class="tborder" border="0" cellpadding="6" cellspacing="1" width="210">
+<thead>
+<tr>
+	<td class="thead">
+		<a style="float: right;" href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#top" onclick="return toggle_collapse('forumrules')"><img id="collapseimg_forumrules" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/collapse_thead.gif" alt="" border="0"></a>
+		Normas de Publicación
+	</td>
+</tr>
+</thead>
+<tbody id="collapseobj_forumrules" style="">
+<tr>
+	<td class="alt1" nowrap="nowrap"><div class="smallfont">
+		
+		<div><strong>No puedes</strong> crear nuevos temas</div>
+		<div><strong>No puedes</strong> responder temas</div>
+		<div><strong>No puedes</strong> subir archivos adjuntos</div>
+		<div><strong>No puedes</strong> editar tus mensajes</div>
+		<hr>
+		
+		<div><a rel="nofollow" href="http://www.forosdelweb.com/misc.php?do=bbcode" target="_blank">BB code</a> está <strong>Activado</strong></div>
+		<div><a rel="nofollow" href="http://www.forosdelweb.com/misc.php?do=showsmilies" target="_blank">Caritas</a> están <strong>Activado</strong></div>
+		<div><a rel="nofollow" href="http://www.forosdelweb.com/misc.php?do=bbcode#imgcode" target="_blank">[IMG]</a> está <strong>Activado</strong></div>
+		<div>Código HTML está <strong>Desactivado</strong></div><div><a rel="nofollow" href="http://www.forosdelweb.com/misc.php?do=linkbacks#trackbacks" target="_blank">Trackbacks</a> está <strong>Desactivado</strong></div>
+<div><a rel="nofollow" href="http://www.forosdelweb.com/misc.php?do=linkbacks#pingbacks" target="_blank">Pingbacks</a> está <strong>Desactivado</strong></div>
+<div><a rel="nofollow" href="http://www.forosdelweb.com/misc.php?do=linkbacks#refbacks" target="_blank">Refbacks</a> está <strong>Desactivado</strong></div>
+		<hr>
+		<div><a rel="nofollow" href="http://www.forosdelweb.com/misc.php?do=showrules" target="_blank">Políticas del foro</a></div>
+	</div></td>
+</tr>
+</tbody>
+</table>
+	</td>
+	<td class="smallfont" align="right">
+		<table border="0" cellpadding="0" cellspacing="0">
+		
+		<tbody><tr>
+			<td>
+			
+			</td>
+		</tr>
+		</tbody></table>
+	</td>
+</tr>
+</tbody></table>
+<!-- /forum rules and admin links -->
+
+<br>
+
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<!-- / close content container -->
+
+
+<!-- /content area table -->
+<div id="bottom-content">
+
+<br>
+<div class="smallfont" align="center">La zona horaria es GMT -6. Ahora son las 18:41.</div>
+<div align="center"><a href="http://fdw.li/fdwpoliticas">Políticas de Uso de Foros del Web</a></div>
+<form action="http://www.forosdelweb.com/" method="get" style="clear: left;">
+
+<table class="page" align="center" border="0" cellpadding="6" cellspacing="0" width="100%">
+<tbody><tr>
+	
+		<td class="tfoot">
+			<select name="styleid" onchange="switch_id(this, 'style')">
+				<optgroup label="Elegir Estilo">
+					<option value="1" class="">-- Fdw 2004</option>
+<option value="4" class="">-- Fdw 2007</option>
+<option value="8" class="">---- Fdw 2010</option>
+<option value="11" class="" selected="selected">---- Fdw 2011</option>
+
+				</optgroup>
+			</select>
+		</td>
+	
+	
+</tr>
+</tbody></table>
+
+</form>
+
+<div id="content_footer"><!-- CONTENT FOOTER -->
+	<div id="footer"><!-- FOOTER -->
+
+<a href="http://www.big-boards.com/board/848/">
+<img title="Message Board Statistics" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/848.png" style="width: 6px; height: 6px; border: 0pt none;" alt="Message Board Statistics" align="left">
+</a>
+		<p class="link_footer">
+			<a href="http://fdw.li/fdwpoliticas">Políticas de uso</a> - 
+			<a href="http://www.maestrosdelweb.com/politica-de-privacidad">Políticas de privacidad</a> - 
+			<a href="http://www.forosdelweb.com/contacto.php" rel="nofollow" accesskey="9">Contáctenos</a> -
+			
+			
+			<a href="http://www.forosdelweb.com/archive/index.php/">Archivo</a> -
+			
+			
+			<a href="http://www.forosdelweb.com/f87/funcion-sql-server-similar-group_concat-mysql-817105/#top" onclick="self.scrollTo(0, 0); return false;">Arriba</a>
+		</p>
+		
+		<p class="text_footer">
+			<!-- Do not remove cronimage or your scheduled tasks will cease to function -->
+			
+			<!-- Do not remove cronimage or your scheduled tasks will cease to function -->
+			
+		</p>
+		<a href="http://www.forosdelweb.com/" class="logo_footer">Foros del Web</a>
+<a href="http://www.maestrosdelweb.com/" class="mdw_footer" title="Un proyecto de Maestros del Web">Un proyecto de Maestros del Web</a>
+<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es" class="cclogo" title="Licencia de contenidos: Creative Commons BY-NC-SA">Licencia de contenidos: Creative Commons BY-NC-SA</a>
+
+	</div><!-- /FOOTER -->
+</div><!-- /CONTENT FOOTER -->
+<!-- fbconnect --><script type="text/javascript">
+<!--
+	var bburl = 'http://www.forosdelweb.com';
+//-->
+</script>
+<script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/FeatureLoader.js" type="text/javascript"></script>
+<script src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/fbconnect.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+	// Main Facebook Connect Javascript Initialization
+try{	FB.init("473cb64d324c82815925a4e322c74f0d", "/xd_receiver.htm"); 
+}catch(err){}
+//-->
+</script><!-- / fbconnect -->
+
+
+
+
+<script type="text/javascript">
+<!--
+	// Main vBulletin Javascript Initialization
+	vBulletin_init();
+//-->
+</script>
+
+<!-- temp -->
+<div style="display: none;">
+	<!-- thread rate -->
+	
+		
+	
+	<!-- / thread rate -->
+</div>
+
+<script type="text/javascript">var _gaq=_gaq || [];_gaq.push(['_setAccount','UA-309831-5']);_gaq.push(['_setCustomVar','1', 'usergroup','group1','2']);_gaq.push(['_setCustomVar', '2', 'forum','f87-SQLServer','3']);_gaq.push(['_setCustomVar', '3', 'vBulletinStage','showthread','3']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';ga.setAttribute('async','true');document.documentElement.firstChild.appendChild(ga);})();</script><noscript><p>google analytics</p></noscript><div style="z-index: 3;" class="smallfont" id="vbseo"><!-- google_ad_section_start(weight=ignore) -->SEO by <a rel="nofollow" href="http://www.crawlability.com/vbseo/">vBSEO</a> 3.3.2<!-- google_ad_section_end --></div>
+<br><div style="z-index: 3;" class="smallfont" align="center"><a href="http://www.forosdelweb.com/archive/index.php/f-36.html">1</a> <a href="http://www.forosdelweb.com/archive/index.php/f-91.html">2</a> <a href="http://www.forosdelweb.com/archive/index.php/f-4.html">3</a> <a href="http://www.forosdelweb.com/archive/index.php/f-53.html">4</a> <a href="http://www.forosdelweb.com/archive/index.php/f-95.html">5</a> <a href="http://www.forosdelweb.com/archive/index.php/f-6.html">6</a> <a href="http://www.forosdelweb.com/archive/index.php/f-70.html">7</a> <a href="http://www.forosdelweb.com/archive/index.php/f-63.html">8</a> <a href="http://www.forosdelweb.com/archive/index.php/f-80.html">9</a> <a href="http://www.forosdelweb.com/archive/index.php/f-102.html">10</a> <a href="http://www.forosdelweb.com/archive/index.php/f-106.html">11</a> <a href="http://www.forosdelweb.com/archive/index.php/f-108.html">12</a> <a href="http://www.forosdelweb.com/archive/index.php/f-16.html">13</a> <a href="http://www.forosdelweb.com/archive/index.php/f-113.html">14</a> <a href="http://www.forosdelweb.com/archive/index.php/f-62.html">15</a> <a href="http://www.forosdelweb.com/archive/index.php/f-17.html">16</a> <a href="http://www.forosdelweb.com/archive/index.php/f-85.html">17</a> <a href="http://www.forosdelweb.com/archive/index.php/f-160.html">18</a> <a href="http://www.forosdelweb.com/archive/index.php/f-54.html">19</a> <a href="http://www.forosdelweb.com/archive/index.php/f-118.html">20</a> <a href="http://www.forosdelweb.com/archive/index.php/f-119.html">21</a> <a href="http://www.forosdelweb.com/archive/index.php/f-136.html">22</a> <a href="http://www.forosdelweb.com/archive/index.php/f-121.html">23</a> <a href="http://www.forosdelweb.com/archive/index.php/f-39.html">24</a> <a href="http://www.forosdelweb.com/archive/index.php/f-18.html">25</a> <a href="http://www.forosdelweb.com/archive/index.php/f-142.html">26</a> <a href="http://www.forosdelweb.com/archive/index.php/f-68.html">27</a> <a href="http://www.forosdelweb.com/archive/index.php/f-51.html">28</a> <a href="http://www.forosdelweb.com/archive/index.php/f-78.html">29</a> <a href="http://www.forosdelweb.com/archive/index.php/f-146.html">30</a> <a href="http://www.forosdelweb.com/archive/index.php/f-15.html">31</a> <a href="http://www.forosdelweb.com/archive/index.php/f-13.html">32</a> <a href="http://www.forosdelweb.com/archive/index.php/f-127.html">33</a> <a href="http://www.forosdelweb.com/archive/index.php/f-77.html">34</a> <a href="http://www.forosdelweb.com/archive/index.php/f-21.html">35</a> <a href="http://www.forosdelweb.com/archive/index.php/f-86.html">36</a> <a href="http://www.forosdelweb.com/archive/index.php/f-99.html">37</a> <a href="http://www.forosdelweb.com/archive/index.php/f-87.html">38</a> <a href="http://www.forosdelweb.com/archive/index.php/f-100.html">39</a> <a href="http://www.forosdelweb.com/archive/index.php/f-82.html">40</a> <a href="http://www.forosdelweb.com/archive/index.php/f-10.html">41</a> <a href="http://www.forosdelweb.com/archive/index.php/f-120.html">42</a> <a href="http://www.forosdelweb.com/archive/index.php/f-125.html">43</a> <a href="http://www.forosdelweb.com/archive/index.php/f-83.html">44</a> <a href="http://www.forosdelweb.com/archive/index.php/f-64.html">45</a> <a href="http://www.forosdelweb.com/archive/index.php/f-8.html">46</a> <a href="http://www.forosdelweb.com/archive/index.php/f-148.html">47</a> <a href="http://www.forosdelweb.com/archive/index.php/f-149.html">48</a> <a href="http://www.forosdelweb.com/archive/index.php/f-116.html">49</a> <a href="http://www.forosdelweb.com/archive/index.php/f-3.html">50</a> <a href="http://www.forosdelweb.com/archive/index.php/f-117.html">51</a> <a href="http://www.forosdelweb.com/archive/index.php/f-84.html">52</a> <a href="http://www.forosdelweb.com/archive/index.php/f-19.html">53</a> <a href="http://www.forosdelweb.com/archive/index.php/f-92.html">54</a> <a href="http://www.forosdelweb.com/archive/index.php/f-75.html">55</a> <a href="http://www.forosdelweb.com/archive/index.php/f-93.html">56</a> <a href="http://www.forosdelweb.com/archive/index.php/f-57.html">57</a> <a href="http://www.forosdelweb.com/archive/index.php/f-58.html">58</a> <a href="http://www.forosdelweb.com/archive/index.php/f-59.html">59</a> <a href="http://www.forosdelweb.com/archive/index.php/f-145.html">60</a> <a href="http://www.forosdelweb.com/archive/index.php/f-154.html">61</a> <a href="http://www.forosdelweb.com/archive/index.php/f-29.html">62</a> <a href="http://www.forosdelweb.com/archive/index.php/f-147.html">63</a> <a href="http://www.forosdelweb.com/archive/index.php/f-79.html">64</a> <a href="http://www.forosdelweb.com/archive/index.php/f-45.html">65</a> <a href="http://www.forosdelweb.com/archive/index.php/f-67.html">66</a> <a href="http://www.forosdelweb.com/archive/index.php/f-96.html">67</a> <a href="http://www.forosdelweb.com/archive/index.php/f-130.html">68</a> <a href="http://www.forosdelweb.com/archive/index.php/f-105.html">69</a> <a href="http://www.forosdelweb.com/archive/index.php/f-30.html">70</a> <a href="http://www.forosdelweb.com/archive/index.php/f-14.html">71</a> <a href="http://www.forosdelweb.com/archive/index.php/f-50.html">72</a> <a href="http://www.forosdelweb.com/archive/index.php/f-12.html">73</a> <a href="http://www.forosdelweb.com/archive/index.php/f-69.html">74</a> <a href="http://www.forosdelweb.com/archive/index.php/f-43.html">75</a> <a href="http://www.forosdelweb.com/archive/index.php/f-26.html">76</a> <a href="http://www.forosdelweb.com/archive/index.php/f-38.html">77</a> <a href="http://www.forosdelweb.com/archive/index.php/f-27.html">78</a> <a href="http://www.forosdelweb.com/archive/index.php/f-41.html">79</a> <a href="http://www.forosdelweb.com/archive/index.php/f-153.html">80</a> <a href="http://www.forosdelweb.com/archive/index.php/f-42.html">81</a> <a href="http://www.forosdelweb.com/archive/index.php/f-56.html">82</a> <a href="http://www.forosdelweb.com/archive/index.php/f-23.html">83</a> <a href="http://www.forosdelweb.com/archive/index.php/f-129.html">84</a> <a href="http://www.forosdelweb.com/archive/index.php/f-90.html">85</a> <a href="http://www.forosdelweb.com/archive/index.php/f-11.html">86</a> <a href="http://www.forosdelweb.com/archive/index.php/f-128.html">87</a> <a href="http://www.forosdelweb.com/archive/index.php/f-52.html">88</a> <a href="http://www.forosdelweb.com/archive/index.php/f-20.html">89</a> <a href="http://www.forosdelweb.com/archive/index.php/f-89.html">90</a> <a href="http://www.forosdelweb.com/archive/index.php/f-88.html">91</a> <a href="http://www.forosdelweb.com/archive/index.php/f-98.html">92</a> <a href="http://www.forosdelweb.com/archive/index.php/f-66.html">93</a> <a href="http://www.forosdelweb.com/archive/index.php/f-162.html">94</a> <a href="http://www.forosdelweb.com/archive/index.php/f-65.html">95</a> <a href="http://www.forosdelweb.com/archive/index.php/f-143.html">96</a> <a href="http://www.forosdelweb.com/archive/index.php/f-112.html">97</a> <a href="http://www.forosdelweb.com/archive/index.php/f-164.html">98</a> <a href="http://www.forosdelweb.com/archive/index.php/f-155.html">99</a> <a href="http://www.forosdelweb.com/archive/index.php/f-122.html">100</a> <a href="http://www.forosdelweb.com/archive/index.php/f-37.html">101</a> <a href="http://www.forosdelweb.com/archive/index.php/f-60.html">102</a> <a href="http://www.forosdelweb.com/archive/index.php/f-2.html">103</a> <a href="http://www.forosdelweb.com/archive/index.php/f-25.html">104</a> <a href="http://www.forosdelweb.com/archive/index.php/f-97.html">105</a> <a href="http://www.forosdelweb.com/archive/index.php/f-157.html">106</a> <a href="http://www.forosdelweb.com/archive/index.php/f-74.html">107</a> <a href="http://www.forosdelweb.com/archive/index.php/f-40.html">108</a> </div>
+
+<script type="text/javascript">
+
+window.orig_onload = window.onload;
+window.onload = function() {
+var cpost=document.location.hash;if(cpost){ if(cobj = fetch_object(cpost.substring(1,cpost.length)))cobj.scrollIntoView(true);else {cpostno = cpost.substring(5,cpost.length);if(parseInt(cpostno)>0 && (cpost.substring(1,5)=='post')){location.replace('http://www.forosdelweb.com/showthread.php?p='+cpostno);};} }
+
+if(typeof window.orig_onload == "function") window.orig_onload();
+}
+
+</script>
+</div><div style="position: absolute; top: -10000px; width: 0px; height: 0px;" id="FB_HiddenContainer"><div><iframe name="fb_api_server" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/client_restserver.htm" class="FB_SERVER_IFRAME" frameborder="0" scrolling="no"></iframe></div><div><iframe name="loginStatus" src="Funcion%20SQL%20Server%20similar%20al%20group_concat%28%29%20de%20MySQL%20-%20Foros%20del%20Web_files/login_status.htm" class="FB_SERVER_IFRAME" frameborder="0" scrolling="no"></iframe></div></div></body></html>

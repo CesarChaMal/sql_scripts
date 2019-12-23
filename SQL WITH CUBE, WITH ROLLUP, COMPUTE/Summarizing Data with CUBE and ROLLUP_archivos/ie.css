@@ -1,0 +1,27 @@
+#abh #up LI {
+	BACKGROUND: url(http://0.tqn.com/d/t1/usrp-tabs.1.png); MARGIN: 0px; HEIGHT: 23px
+}
+#abh #up A {
+	BACKGROUND: url(http://0.tqn.com/d/t1/usrp-tabs.1.png); MARGIN: 0px; HEIGHT: 23px
+}
+#abh #up LI {
+	MARGIN-LEFT: 6px; BORDER-BOTTOM: #ccc 1px solid
+}
+#abh #up A {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 15px; PADDING-LEFT: 9px; BACKGROUND-POSITION-X: 100%; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; MARGIN-BOTTOM: 0px; PADDING-BOTTOM: 0px; MARGIN-LEFT: 6px; MARGIN-RIGHT: -6px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+#abh #up .c {
+	BORDER-LEFT-COLOR: #fff; BACKGROUND-POSITION-Y: -23px; BORDER-BOTTOM-COLOR: #fff; BORDER-TOP-COLOR: #fff; BORDER-RIGHT-COLOR: #fff
+}
+#abh #up .c A {
+	BACKGROUND-POSITION: 100% -23px; BORDER-BOTTOM: #fff 1px solid
+}
+.gt1#tt1 #up .c {
+	BORDER-LEFT-COLOR: #effaff; BACKGROUND-POSITION-Y: 100%; BORDER-BOTTOM-COLOR: #effaff; BORDER-TOP-COLOR: #effaff; BORDER-RIGHT-COLOR: #effaff
+}
+.gt1#tt1 #up .c A {
+	BACKGROUND-POSITION: 100% 100%; BORDER-BOTTOM: #effaff 1px solid
+}
+.nl BUTTON {
+	TOP: 0px
+}

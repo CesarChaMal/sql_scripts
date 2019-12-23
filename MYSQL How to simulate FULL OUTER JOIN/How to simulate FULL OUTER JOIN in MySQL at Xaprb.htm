@@ -1,0 +1,993 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head profile="http://gmpg.org/xfn/11">
+
+
+<title>   How to simulate FULL OUTER JOIN in MySQL at Xaprb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="description" content="Stay curious!">
+<meta name="generator" content="WordPress 2.6.2"> <!-- leave this for stats please -->
+<link href="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/style.css" rel="stylesheet" type="text/css" media="screen">
+<link rel="alternate" type="application/rss+xml" title="Xaprb RSS Feed" href="http://www.xaprb.com/blog/feed/">
+<link rel="shortcut icon" type="image/x-png" href="http://www.xaprb.com/blog/wp-content/themes/journalist/favicon.png">
+<link rel="pingback" href="http://www.xaprb.com/blog/xmlrpc.php">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.xaprb.com/blog/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.xaprb.com/blog/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 2.6.2">
+
+
+<!-- Bad Behavior 2.0.23 run time: 3.589 ms -->
+<script type="text/javascript">
+<!--
+function bb2_addLoadEvent(func) {
+	var oldonload = window.onload;
+	if (typeof window.onload != 'function') {
+		window.onload = func;
+	} else {
+		window.onload = function() {
+			oldonload();
+			func();
+		}
+	}
+}
+
+bb2_addLoadEvent(function() {
+	for ( i=0; i < document.forms.length; i++ ) {
+		if (document.forms[i].method == 'post') {
+			var myElement = document.createElement('input');
+			myElement.setAttribute('type', 'hidden');
+			myElement.name = 'bb2_screener_';
+			myElement.value = '1235081602 189.148.172.58';
+			document.forms[i].appendChild(myElement);
+		}
+	}
+});
+// --></script>
+		<script charset="utf-8" id="injection_graph_func" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/injection_graph_func.js"></script><script id="_nameHighlight_injection"></script><link class="skype_name_highlight_style" href="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/injection_nh_graph.css" type="text/css" rel="stylesheet" charset="utf-8" id="_injection_graph_nh_css"></head><body>
+<div id="container" class="group">
+
+<h1><a href="http://www.xaprb.com/blog/">Xaprb</a></h1>
+<div id="bubble"><p>Stay curious!</p></div> <!-- erase this line if you want to turn the bubble off -->
+
+<div id="content" class="group">
+
+<h2 id="post-155"><a href="http://www.xaprb.com/blog/2006/05/26/how-to-write-full-outer-join-in-mysql/" rel="bookmark">How to simulate FULL OUTER JOIN in MySQL</a></h2>
+<p class="comments"><a href="http://www.xaprb.com/blog/2006/05/26/how-to-write-full-outer-join-in-mysql/#comments">with 22 comments</a></p>
+
+<div class="main">
+	<p>In this article I’ll show several ways to emulate a <code>FULL OUTER</code> join on a <abbr title="Relational Database Management System">RDBMS</abbr>
+that doesn’t support it, as is the case with even the most recent
+versions of MySQL. This useful query is surprisingly tricky to get
+right.</p>
+
+<h3>Introduction</h3>
+
+<p>A standard SQL <code>FULL OUTER</code> join is like a <code>LEFT</code> or <code>RIGHT</code> join, except that it includes all rows from both tables, matching them where possible and filling in with <code>NULL</code>s where there is no match.  I’ll illustrate that for clarity.  Here are two of my favorite tables, <code>apples</code> and <code>oranges</code>:</p>
+
+<table class="borders collapsed">
+  <caption>apples</caption>
+  <tbody><tr><th>Variety</th><th>Price</th></tr>
+  <tr><td>Fuji</td><td>5.00</td></tr>
+  <tr><td>Gala</td><td>6.00</td></tr>
+</tbody></table>
+
+<table class="borders collapsed">
+  <caption>oranges</caption>
+  <tbody><tr><th>Variety</th><th>Price</th></tr>
+  <tr><td>Valencia</td><td>4.00</td></tr>
+  <tr><td>Navel</td><td>5.00</td></tr>
+</tbody></table>
+
+<p>I’ll join them on price.  Here is the left join:</p>
+
+<pre>select * from apples as a
+    left outer join oranges as o on a.price = o.price</pre>
+
+<table class="borders collapsed">
+<thead>
+<tr><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th></tr>
+</thead>
+<tbody>
+<tr><td>Fuji</td><td>5</td><td>Navel</td><td>5</td></tr>
+<tr><td>Gala</td><td>6</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+</tbody>
+</table>
+
+<p>And the right join:</p>
+
+<pre>select * from apples as a
+    right outer join oranges as o on a.price = o.price</pre>
+
+<table class="borders collapsed">
+<thead>
+<tr><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th></tr>
+</thead>
+<tbody>
+<tr><td class="null">NULL</td><td class="null">NULL</td><td>Valencia</td><td>4</td></tr>
+<tr><td>Fuji</td><td>5</td><td>Navel</td><td>5</td></tr>
+</tbody>
+</table>
+
+<p>The <code>FULL OUTER JOIN</code> of these two tables, on price, should give the following result:
+
+</p><table class="borders collapsed">
+<thead>
+<tr><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th></tr>
+</thead>
+<tbody>
+<tr><td>Fuji</td><td>5</td><td>Navel</td><td>5</td></tr>
+<tr><td>Gala</td><td>6</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td class="null">NULL</td><td class="null">NULL</td><td>Valencia</td><td>4</td></tr>
+</tbody>
+</table>
+
+<p>That’s the result I’ll be working toward in this article. Here is a
+script to create and populate the example tables, so you can follow
+along:</p>
+
+<pre>create table apples (variety char(10) not null primary key, price int not null);
+create table oranges (variety char(10) not null primary key, price int not null);
+insert into apples(variety, price) values('Fuji',5),('Gala',6);
+insert into oranges(variety, price) values('Valencia',4),('Navel',5);</pre>
+
+<h3>Method 1: two <code>JOIN</code>s and a <code>UNION</code></h3>
+
+<p>One method to simulate a full join is to take the union of two outer joins, for example,</p>
+
+<pre>select * from apples as a
+    left outer join oranges as o on a.price = o.price
+union
+select * from apples as a
+    right outer join oranges as o on a.price = o.price</pre>
+
+<p>This gives the desired results in this case, but it isn’t correct
+for all cases. Suppose there are duplicate records in the tables
+(remove the primary key and insert twice to create this situation). <code>UNION</code> eliminates duplicates, which a full join doesn’t do.  <code>UNION ALL</code> isn’t the right answer either, because it will cause spurious duplicates.  In fact, <code>UNION</code>
+generates two independent result sets and then combines them, so there
+is no way to get around this, because the two result sets need to “know
+about each other” to produce the right results.</p>
+
+<p>There are legitimate cases where duplicate results are expected and
+correct. For instance, even when the rows are unique, selecting only
+certain columns, in which there are duplicates, could cause this
+situation. This doesn’t apply in relational theory, because a set never
+has duplicates no matter what, but it does in SQL.</p>
+
+<h3>Method 2: <code>UNION ALL</code> and an exclusion join</h3>
+
+<p>One way to make <code>UNION</code> include only the duplicates I want is to use an <a href="http://www.xaprb.com/blog/2005/09/23/how-to-write-a-sql-exclusion-join/">exclusion join</a> to eliminate anything from the second result that is already included in the first, like this:</p>
+
+<pre>select * from apples as a
+   left outer join oranges as o on a.price = o.price
+union all
+select * from apples as a
+   right outer join oranges as o on a.price = o.price
+where a.price is null;</pre>
+
+<p>This handles duplicate rows correctly and doesn’t include anything it shouldn’t.  It’s necessary to use <code>UNION ALL</code> instead of plain <code>UNION</code>,
+which would eliminate the duplicates I want to keep. This may be
+significantly more efficient on large result sets, since there’s no
+need to sort and remove duplicates.</p>
+
+<h3>Method 3: use a mutex table</h3>
+
+<p>There’s a case where <code>UNION</code> won’t work: older versions of MySQL don’t support it.  All is not lost, though.</p>
+
+<p>I’ve written several articles explaining how to start with a set of mutually exclusive numbers (which I informally call a “<a href="http://www.xaprb.com/blog/2005/09/22/mutex-tables-in-sql/">mutex table</a>“),
+then use the mutual exclusivity of the numbers to join things together
+in interesting ways. This lets me simulate subqueries and unions on
+earlier versions of MySQL, for example. This approach seems like it
+might work well here, too. For the following queries I’ll assume my
+mutex table has the values 0 and 1. Here’s a baseline mutex query for
+these two tables:</p>
+
+<pre>select * from mutex
+    left outer join apples as a on i = 0
+    left outer join oranges as o on i = 1;</pre>
+
+<table class="borders collapsed">
+<thead>
+<tr><th scope="row">i</th><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Fuji</td><td>5</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>0</td><td>Gala</td><td>6</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>1</td><td class="null">NULL</td><td class="null">NULL</td><td>Valencia</td><td>4</td></tr>
+<tr><td>1</td><td class="null">NULL</td><td class="null">NULL</td><td>Navel</td><td>5</td></tr>
+</tbody>
+</table>
+
+<p>Of course this isn’t a full join. If I want to full join on price,
+naturally, I need to include price in the join criteria somewhere, and
+the query above doesn’t even mention the price. But it’s a starting
+point for tinkering.</p>
+
+<p>The mutex values in the leftmost column, combined with the join
+criteria, ensure that every row in the two tables gets included on its
+own row. The mutual exclusivity causes the Navel row not to be matched
+to the Fuji row, even though they have the same price. The correct
+behavior of a full join on price is to “fill in” the <code>NULL</code> values where the prices are equal. This modification to the join criteria will fill it in:</p>
+
+<pre>select * from mutex
+    left outer join apples as a on i = 0
+    left outer join oranges as o on i = 1 or a.price = o.price;</pre>
+
+<p>The <code>or a.price = o.price</code> relaxes the mutual exclusivity, telling the join to keep the rows separated unless they have the same price:</p>
+
+<table class="borders collapsed">
+<thead>
+<tr><th scope="row">i</th><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Fuji</td><td>5</td><td>Navel</td><td>5</td></tr>
+<tr><td>0</td><td>Gala</td><td>6</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>1</td><td class="null">NULL</td><td class="null">NULL</td><td>Valencia</td><td>4</td></tr>
+<tr><td>1</td><td class="null">NULL</td><td class="null">NULL</td><td>Navel</td><td>5</td></tr>
+</tbody>
+</table>
+
+<p>That’s getting closer. There is a spurious row, though. The Navel
+row at the bottom of the result set shouldn’t be there; it has already
+been matched to the Fuji row earlier, so there’s no need to include it
+with all those <code>NULL</code>s as though there were no matching row in <code>apples</code>.  Can I eliminate the Navel row without eliminating the Valencia row?</p>
+
+<p>That turns out to be harder to do.  I stared at it for a while, thinking I could include a <code>WHERE</code> clause that would eliminate spurious rows based on the value of <code>i</code>, but after a bit I got a reality check: the row has already been included above, and <code>WHERE</code> clauses work a row at a time, so there’s no way to assert something about one row while applying the <code>WHERE</code>
+clause to another row. This simple fact is all I needed to realize
+there’s no way to eliminate the Navel row with the given information.</p>
+
+<p>What I can do, though, is stack another copy of the <code>apples</code> table onto the right-hand side of the results thus far, matching them to the <code>oranges</code> values <em>and confining them to rows with mutex value 1 instead of 0</em>.  Now I can write a <code>WHERE</code> clause to see if a row in the <code>i = 1</code> part of the result set matches a row in the <code>i = 0</code> part.  I’ll write it without the <code>WHERE</code> clause to start:</p>
+
+<pre>select * from mutex
+   left outer join apples as a on i = 0
+   left outer join oranges as o on i = 1 or a.price = o.price
+   left outer join apples as a2 on i = 1 and a2.price = o.price;</pre>
+
+<table class="borders collapsed">
+<thead>
+<tr><th scope="row">i</th><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Fuji</td><td>5</td><td>Navel</td><td>5</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>0</td><td>Gala</td><td>6</td><td class="null">NULL</td><td class="null">NULL</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>1</td><td class="null">NULL</td><td class="null">NULL</td><td>Valencia</td><td>4</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>1</td><td class="null">NULL</td><td class="null">NULL</td><td>Navel</td><td>5</td><td>Fuji</td><td>5</td></tr>
+</tbody>
+</table>
+
+<p>Now there is a way to tell between the Navel row, which I don’t want, and the Valencia, which I do: the Navel has non-<code>NULL</code> values in the rightmost copy of <code>apples</code>, but the Valencia doesn’t.  All I have to do is eliminate rows that have matching values:</p>
+
+<pre>select * from mutex
+   left outer join apples as a on i = 0
+   left outer join oranges as o on i = 1 or a.price = o.price
+   left outer join apples as a2 on i = 1 and a2.price = o.price
+where o.price is null or a2.price is null</pre>
+
+<p>If the <code>WHERE</code> clause is hard to understand, perhaps it’s easier to think of it this way: <code>where not(o.price is not null and a2.price is not null)</code>.  Both clauses are identical; all I did was apply some boolean identities.  Here is the result:</p>
+
+<table class="borders collapsed">
+<thead>
+<tr><th scope="row">i</th><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th><th scope="row">variety</th><th scope="row">price</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Fuji</td><td>5</td><td>Navel</td><td>5</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>0</td><td>Gala</td><td>6</td><td class="null">NULL</td><td class="null">NULL</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+<tr><td>1</td><td class="null">NULL</td><td class="null">NULL</td><td>Valencia</td><td>4</td><td class="null">NULL</td><td class="null">NULL</td></tr>
+</tbody>
+</table>
+
+<p>That result has the correct rows, but it has some extra columns, which I don’t need.  Here’s the final query:</p>
+
+<pre>select a.*, o.* from mutex
+   left outer join apples as a on i = 0
+   left outer join oranges as o on i = 1 or a.price = o.price
+   left outer join apples as a2 on i = 1 and a2.price = o.price
+where o.price is null or a2.price is null</pre>
+
+<p>Remember, this can’t be done without the mutex table, because I need something to provide non-<code>NULL</code> values for every row; otherwise the joins would not include values where the leftmost table has no rows to contribute.</p>
+
+<p>This technique works if there are duplicate rows, and works on older
+versions of MySQL, but is probably the least efficient of the three
+I’ve demonstrated here. As usual, which query is appropriate depends on
+circumstances.</p></div>
+
+<div class="meta group">
+<div class="signature">
+    <p>Written by Xaprb <span class="edit"></span></p>
+    <p>May 26th, 2006 at 9:45 pm</p>
+</div>	
+<div class="tags">
+    <p>Posted in <a href="http://www.xaprb.com/blog/category/sql/" title="View all posts in SQL" rel="category tag">SQL</a></p>
+    </div>
+</div>
+
+<div class="navigation group">
+    <div class="alignleft">« <a href="http://www.xaprb.com/blog/2006/05/24/subscribe/">Subscribe</a></div>
+    <div class="alignright"><a href="http://www.xaprb.com/blog/2006/05/28/xaprb-is-featured-on-9rules/">Xaprb is featured on 9rules</a> »</div>
+</div>
+
+
+<!-- You can start editing here. -->
+
+<a name="comments" id="comments"></a>
+
+<h3 class="reply">22 Responses to 'How to simulate FULL OUTER JOIN in MySQL'</h3> 
+<p class="comment_meta">Subscribe to comments with <a href="http://www.xaprb.com/blog/2006/05/26/how-to-write-full-outer-join-in-mysql/feed/">RSS</a> 
+	or <a href="http://www.xaprb.com/blog/2006/05/26/how-to-write-full-outer-join-in-mysql/trackback/" rel="trackback">TrackBack</a> to 'How to simulate FULL OUTER JOIN in MySQL'.
+</p>
+
+<ol class="commentlist">
+
+
+<li id="comment-1524" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>I
+tried a UNION and a UNION all as you have described here, but those
+just gave more records with no way, that I could see, to disambiguate
+and get down to the “net change” in history records.</p>
+<p>My problem is as follows …</p>
+<p>I have been wrestling with this query for a couple of days now. Any
+help is much appreciated. I have a history table that logs all fields
+created for a record and every time the field is updated. This lets me
+track any change to the record and who touched it. The problem is I’d
+like to take the raw change data and distill it down to records like:
+FIELD changed_to_info changed_from_info BUT I keep getting duplicate
+records in my query. THANK-YOU! THANK-YOU!</p>
+<p>Here is a small test that I have distilled the problem into as I have tried to get it working …</p>
+<pre># test table representing logging to a "change history" table
+# NOTE: the FK to the record being updated not shown for simplicity
+create table test (
+   pk 		 int(3) primary key not null auto_increment,
+   `by`   varchar(10) not null,
+   `when` datetime not null,
+   `field` varchar(10) not null,
+   revision int not null default 0,
+   type varchar(5) not null,
+   val varchar(20) not null
+   );</pre>
+<p>[ed: snipped some stuff that got mangled]</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/717929a2f79c4e4d87dcb8cc3ae8957d.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.e2msystems.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.e2msystems.com');" rel="external nofollow">Joe Simone</a></strong></p>
+	<p><small>16 Aug 06 at <a href="#comment-1524">2:07 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-1530" class="byuser comment-author-baron bypostauthor">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Hi Joe,</p>
+<p>A lot of your comment got mangled, so I’ll do my best.  Here’s the table as I got it from the INSERTs in your comment:</p>
+<pre>+----+-------+------------+-------+----------+------+----------+
+| pk | by    | when       | field | revision | type | val      |
++----+-------+------------+-------+----------+------+----------+
+|  1 | bob   | 2006-08-01 | food  |        1 | add  | pizza    |
+|  2 | bob   | 2006-08-01 | sport |        1 | add  | baseball |
+|  3 | bob   | 2006-08-01 | drink |        1 | add  | beer     |
+|  4 | bob   | 2006-08-01 | lang  |        1 | add  | java     |
+|  5 | bob   | 2006-08-01 | state |        1 | add  | fla      |
+|  6 | admin | 2006-08-05 | drink |        2 | upd  | cola     |
+|  7 | admin | 2006-08-05 | lang  |        2 | upd  | c++      |
+|  8 | admin | 2006-08-05 | food  |        2 | upd  | tacos    |
+|  9 | bob   | 2006-08-15 | drink |        3 | upd  | wine     |
+| 10 | bob   | 2006-08-15 | lang  |        3 | upd  | ruby     |
+| 11 | bob   | 2006-08-15 | state |        3 | upd  | ny       |
+| 12 | admin | 2006-08-16 | drink |        4 | upd  | beer     |
++----+-------+------------+-------+----------+------+----------+</pre>
+<p>You want to see (for example) that bob changed drink between
+revision 3 and 2, but not include a line showing changes between
+revision 3 and 1, right? Does this do what you need?</p>
+<pre>select a.field, a.by, a.revision, a.val, b.by, b.revision, b.val
+from test as a
+   left outer join test as b on a.field = b.field
+      and b.revision &lt; a.revision
+   left outer join test as c on a.field = c.field
+      and c.revision &lt; a.revision and c.revision &gt; b.revision
+where b.field is not null and c.field is null;
+
++-------+-------+----------+-------+-------+----------+-------+
+| field | by    | revision | val   | by    | revision | val   |
++-------+-------+----------+-------+-------+----------+-------+
+| drink | admin |        2 | cola  | bob   |        1 | beer  |
+| lang  | admin |        2 | c++   | bob   |        1 | java  |
+| food  | admin |        2 | tacos | bob   |        1 | pizza |
+| drink | bob   |        3 | wine  | admin |        2 | cola  |
+| lang  | bob   |        3 | ruby  | admin |        2 | c++   |
+| state | bob   |        3 | ny    | bob   |        1 | fla   |
+| drink | admin |        4 | beer  | bob   |        3 | wine  |
++-------+-------+----------+-------+-------+----------+-------+</pre>
+<p>This is essentially a 3-way cross join, so it’s an n^3 algorithm.
+You would be well advised to add an index on (field, revision) or it
+may take all day on a large data set :-) Also, it looks like you don’t
+need DATETIME, just DATE.</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/56a70c43cf23f2f9eeb6c1c52a8b63b9.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.xaprb.com/" rel="external nofollow">Xaprb</a></strong></p>
+	<p><small>16 Aug 06 at <a href="#comment-1530">4:11 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-2261" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>The small defination is</p>
+<p>LEFT OUTER JOIN - This returns all the matching rows and the unmatched rows of the left table of the SQL code.</p>
+<p>RIGHT OUTER JOIN - This returns all the matching rows and the unmatched rows of the right table of the SQL. </p>
+<p>FULL OUTER JOIN - This returns all the matching and unmatched rows from both the tables.</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/7687597953d2926897eee548321434d1.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.softwarecodehelp.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.softwarecodehelp.com');" rel="external nofollow">Raj Shekhar</a></strong></p>
+	<p><small>23 Oct 06 at <a href="#comment-2261">5:26 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-3374" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>For
+anyone curious, method #1 CAN be extended to handle more than 2 tables…
+It just gets ugly. Basically, for each table LEFT JOIN all other tables
+to it, Then union each of those together.</p>
+<pre>CREATE TABLE `table1` (
+  `f1` int(11) default NULL,
+  `gid` int(11) default NULL
+) ENGINE=MyISAM;
+
+CREATE TABLE `table2`...
+
+CREATE TABLE `table3`...
+
+INSERT INTO table1 VALUES(1,1), (4,1), (7,1), (10,3), (13,4), (16,4), (19,4), (22,6);
+INSERT INTO table2 VALUES(2,1), (5,2), (8,2), (11,3), (14,4), (17,5), (20,5), (23,6);
+INSERT INTO table3 VALUES(3,2), (6,2), (9,3), (12,3), (15,5), (18,5), (21,6), (24,6);</pre>
+<p>Here I’m trying to get the SUM of each group of numbers within a
+single table and display them together in the same result so I need a
+subquery here… i.e. table1, group 1 is 1+4+7 = 12; table3, group 2 is
+3+6 = 9 ….</p>
+<pre>(SELECT t1.gid, IFNULL(t1.sum1, 0) AS sum1, IFNULL(t2.sum2, 0) AS sum2, IFNULL(t3.sum3, 0) AS sum3
+  FROM (SELECT sum(f1) AS sum1, gid FROM table1 GROUP BY gid) AS t1
+  LEFT JOIN (SELECT sum(f1) AS sum2, gid FROM table2 GROUP BY gid) AS t2 ON (t1.gid = t2.gid)
+  LEFT JOIN (SELECT sum(f1) AS sum3, gid FROM table3 GROUP BY gid) AS t3 ON (t1.gid = t3.gid)
+) UNION (
+SELECT t2.gid, IFNULL(t1.sum1, 0) AS sum1, IFNULL(t2.sum2, 0) AS sum2, IFNULL(t3.sum3, 0) AS sum3
+  FROM (SELECT sum(f1) AS sum2, gid FROM table2 GROUP BY gid) AS t2
+  LEFT JOIN (SELECT sum(f1) AS sum1, gid FROM table1 GROUP BY gid) AS t1 ON (t2.gid = t1.gid)
+  LEFT JOIN (SELECT sum(f1) AS sum3, gid FROM table3 GROUP BY gid) AS t3 ON (t2.gid = t3.gid)
+) UNION (
+SELECT t3.gid, IFNULL(t1.sum1, 0) AS sum1, IFNULL(t2.sum2, 0) AS sum2, IFNULL(t3.sum3, 0) AS sum3
+  FROM (SELECT sum(f1) AS sum3, gid FROM table3 GROUP BY gid) AS t3
+  LEFT JOIN (SELECT sum(f1) AS sum1, gid FROM table1 GROUP BY gid) AS t1 ON (t3.gid = t1.gid)
+  LEFT JOIN (SELECT sum(f1) AS sum2, gid FROM table2 GROUP BY gid) AS t2 ON (t3.gid = t2.gid)
+) ORDER BY gid;
++------+------+------+------+
+| gid  | sum1 | sum2 | sum3 |
++------+------+------+------+
+|    1 |   12 |    2 |    0 |
+|    2 |    0 |   13 |    9 |
+|    3 |   10 |   11 |   21 |
+|    4 |   48 |   14 |    0 |
+|    5 |    0 |   37 |   33 |
+|    6 |   22 |   23 |   45 |
++------+------+------+------+</pre>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/6dfa23e5001120cdae7b901cc9bffb91.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong>Matthew Montgomery</strong></p>
+	<p><small>25 Jan 07 at <a href="#comment-3374">1:05 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-6451" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Hi,</p>
+<p>Using your method, how can I use an ORDER BY sentence to order the rows by the common attribute (in your case, price)?</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/0b16a4119c2bcaaef12ee0a5087b74c0.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.aventuraycia.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.aventuraycia.com');" rel="external nofollow">kelmer</a></strong></p>
+	<p><small>9 May 07 at <a href="#comment-6451">4:23 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-6455" class="byuser comment-author-baron bypostauthor">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>You can just add ORDER BY as normal at the end of the query.</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/56a70c43cf23f2f9eeb6c1c52a8b63b9.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.xaprb.com/" rel="external nofollow">Xaprb</a></strong></p>
+	<p><small>9 May 07 at <a href="#comment-6455">10:25 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-6465" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>I tried this:</p>
+<pre>(select * from apples as a
+   left outer join oranges as o on a.price= o.price)
+union all
+(select * from applesas a
+   right outer join oranges as o on a.price= o.price
+where a.price is null)
+order by a.price</pre>
+<p>and I get an error saying: “#1250 - Table ‘a’ from one of the SELECTs cannot be used in global ORDER clause “</p>
+<p>If I use this instead</p>
+<pre>select * from apples as a
+   left outer join oranges as o on a.price = o.price
+union all
+select * from apples as a
+   right outer join oranges as o on a.price = o.price
+where a.price is null
+order by a.price</pre>
+<p>I get this:</p>
+<p>“#1109 - Unknown table ‘a’ in order clause “</p>
+<p>Where and how should I puit the ORDER BY sentence?</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/0b16a4119c2bcaaef12ee0a5087b74c0.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.aventuraycia.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.aventuraycia.com');" rel="external nofollow">kelmer</a></strong></p>
+	<p><small>10 May 07 at <a href="#comment-6465">2:58 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-6467" class="byuser comment-author-baron bypostauthor">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>The MySQL manual explains what you need to do in the section on <a href="http://dev.mysql.com/doc/refman/5.0/en/union.html" rel="nofollow" onclick="javascript:urchinTracker ('/outbound/comment/dev.mysql.com');">UNION syntax</a>.</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/56a70c43cf23f2f9eeb6c1c52a8b63b9.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.xaprb.com/" rel="external nofollow">Xaprb</a></strong></p>
+	<p><small>10 May 07 at <a href="#comment-6467">8:03 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-13563" class="pingback">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>[...] <a href="http://www.xaprb.com/blog/2006/05/26/how-to-write-full-outer-join-in-mysql/" rel="nofollow">http://www.xaprb.com/blog/2006/05/26/how-to-write-full-outer-join-in-mysql/</a> [...]</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/ad516503a11cd5ca435acc9bb6523536.jpeg" class="avatar avatar-32 avatar-default" height="32" width="32">		<p><strong><a href="http://chrischou.org/my/?p=78" onclick="javascript:urchinTracker('/outbound/commentauthor/chrischou.org');" rel="external nofollow">Chris Chou’s Homeworld » 在主键相关的查询中，模拟MySQL的全外联接</a></strong></p>
+	<p><small>23 Oct 07 at <a href="#comment-13563">8:07 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-14148" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Awesome article, helped me big time.</p>
+<p>-Dan</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/3e0b957bff7124d8346cbfa1a2b54e27.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://cantsay/" onclick="javascript:urchinTracker('/outbound/commentauthor/cantsay');" rel="external nofollow">Dan</a></strong></p>
+	<p><small>11 Jan 08 at <a href="#comment-14148">8:01 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-14243" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Its Wonderful! Explanation is best ……… even newbies like me can understand this better.<br>
+Thanks a lot!</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/93c0a5890603a5e81ce916b073db7e0f.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong>Garry</strong></p>
+	<p><small>22 Feb 08 at <a href="#comment-14243">10:29 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-14288" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Thanks
+for a useful post. Am I right that a full outer join implementation is
+not possible using MySQL’s NATURAL joins? I’m struggling to get a
+result where the column joined on does not appear twice. NATURAL joins
+achieve this but return the columns in different orders… any ideas?</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/80a09b04fe15c6aff61349ca60d522e4.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong>Mark</strong></p>
+	<p><small>12 Mar 08 at <a href="#comment-14288">7:41 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-14289" class="byuser comment-author-baron bypostauthor">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>It turns out that FULL OUTER JOIN isn’t possible no matter what.  The reasons are kind of technical.</p>
+<p>You should be able to get the columns in the order you want if you specify them explicitly.</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/ddcab6872a880ce87e458a342b603b3b.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.xaprb.com/" rel="external nofollow">Xaprb</a></strong></p>
+	<p><small>12 Mar 08 at <a href="#comment-14289">7:53 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15108" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Great article… However i failed to join my table to give me what i want.<br>
+Table: person<br>
+CREATE TABLE `person` (<br>
+  `region` varchar(20) collate latin1_general_ci default NULL,<br>
+  `name` varchar(20) collate latin1_general_ci default NULL,<br>
+  `gender` char(2) collate latin1_general_ci default NULL,<br>
+);</p>
+<p>insert into person (’UK’,'Steve’,'m’);<br>
+insert into person (’UK’,'Marie’,'f’);<br>
+insert into person (’UK’,'Rob’,'m’);<br>
+insert into person (’US’,'Bob’,'m’);<br>
+insert into person (’US’,'Michele’,'f’);<br>
+insert into person (’NL’,'Jim’,'m’);</p>
+<p>Now i want to issue a query which will display in one row the number of male and female per region<br>
+That should be<br>
+Region|M_Count|F_Count<br>
+UK|2|1<br>
+US|1|1<br>
+NL|1|0</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/588dec2a60f4cf3aa724a7724b57c7d2.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.businesstz.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.businesstz.com');" rel="external nofollow">Kili</a></strong></p>
+	<p><small>15 Sep 08 at <a href="#comment-15108">8:05 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15109" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Hi Kili,</p>
+<p>As far as I know we can not take two counts from single query, so we
+need to use sub-queries so you can try this following query:</p>
+<p>select a.region, (a.Malecount   b.Malecount) Males, (a.Femalecount   b.Femalecount) Females<br>
+from<br>
+( select region, count(*) MaleCount, 0 FemaleCount from person where gender=’M'group by region)a,<br>
+( select region, 0 MaleCount, count(*) FemaleCount from person where gender=’F'group by region)b</p>
+<p>I think this should work.<br>
+where a.region = b.region</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/93c0a5890603a5e81ce916b073db7e0f.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong>Garry</strong></p>
+	<p><small>15 Sep 08 at <a href="#comment-15109">8:39 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15110" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Sorry! please use last line of the last comment as part of query.<br>
+Sorry for typo err.</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/93c0a5890603a5e81ce916b073db7e0f.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong>Garry</strong></p>
+	<p><small>15 Sep 08 at <a href="#comment-15110">8:41 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15111" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Thanks Garry, </p>
+<p>It refuse to accept the (a.Malecount b.Malecount) Males synthax.</p>
+<p>Any other idea</p>
+<p>Kili</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/588dec2a60f4cf3aa724a7724b57c7d2.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.businesstz.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.businesstz.com');" rel="external nofollow">Kili</a></strong></p>
+	<p><small>15 Sep 08 at <a href="#comment-15111">3:59 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15112" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>I tried<br>
+select a.region, (a.Malecount   b.Malecount) Males, (a.Femalecount   b.Femalecount) Females<br>
+from<br>
+( select region, count(*) MaleCount, 0 FemaleCount from person where gender=’M’group by region)a,<br>
+( select region, 0 MaleCount, count(*) FemaleCount from person where gender=’F’group by region)b  where a.region = b.region </p>
+<p>which return correct result but for only one region. </p>
+<p>Kili</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/588dec2a60f4cf3aa724a7724b57c7d2.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.businesstz.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.businesstz.com');" rel="external nofollow">Kili</a></strong></p>
+	<p><small>15 Sep 08 at <a href="#comment-15112">4:13 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15400" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Hey Kili,</p>
+<p>I’m pretty late to the game here, but you can do the following to find the number of people of each gender for each region:</p>
+<p>select<br>
+region,<br>
+sum(if(gender = ‘m’, 1, 0)) as males,<br>
+sum(if(gender = ‘f’, 1, 0)) as females<br>
+from person<br>
+group by region;</p>
+<p>See </p>
+<p><a href="http://dev.mysql.com/tech-resources/articles/wizard/print_version.html" rel="nofollow" onclick="javascript:urchinTracker ('/outbound/comment/dev.mysql.com');">http://dev.mysql.com/tech-resources/articles/wizard/print_version.html</a></p>
+<p>for more info.</p>
+<p>Mike</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/50ef4f0ff125ec8d764c0c9bd8e016a3.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong>Mike Gibson</strong></p>
+	<p><small>17 Nov 08 at <a href="#comment-15400">8:07 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15476" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>好帖,感谢博主分享!</p>
+<p>内事绝不问白肚，<br>
+外事不决问狗狗，<br>
+房事不决问网易。<br>
+注意第一句是“绝不”。<br>
+—————————–<br>
+内事绝不问百度，<br>
+外事不决问笔搜，<br>
+房事不决问网易。<br>
+注意第二句是“笔搜”。</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/a4088a3f095ab9f7d45ef02e78026944.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong>笔锋侠</strong></p>
+	<p><small>28 Nov 08 at <a href="#comment-15476">3:57 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15491" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>Thanks Mike for your great tip.. That exactly what i was looking for. </p>
+<p>笔锋侠: Thanks for your post as well though am not sure what who has the decryption key.</p>
+<p>Kili</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/588dec2a60f4cf3aa724a7724b57c7d2.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://www.businesstz.com/" onclick="javascript:urchinTracker('/outbound/commentauthor/www.businesstz.com');" rel="external nofollow">Kili</a></strong></p>
+	<p><small>2 Dec 08 at <a href="#comment-15491">10:30 am</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+<li id="comment-15697" class="">
+	<div class="comment_mod">
+		</div>
+	
+	<div class="comment_text">
+	<p>i believe there is one more way to do it, something like this:</p>
+<p>SELECT *<br>
+FROM apples AS a<br>
+    LEFT OUTER JOIN<br>
+    (<br>
+     SELECT o2.*<br>
+     FROM apples AS a<br>
+     RIGHT OUTER JOIN oranges AS o2<br>
+     ON a.price = o2.price<br>
+    ) AS o ON a.price = o.price</p>
+	</div>
+	
+	<div class="comment_author">
+		<img alt="" src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/b59809d605104cf37e1a986fffa5e142.jpeg" class="avatar avatar-32" height="32" width="32">		<p><strong><a href="http://g-mai.l%28withoutand-%29/" onclick="javascript:urchinTracker('/outbound/commentauthor/mauricioprado00@g-mai.l(withoutand-)');" rel="external nofollow">mauricio</a></strong></p>
+	<p><small>19 Jan 09 at <a href="#comment-15697">1:46 pm</a> </small></p>
+	</div>
+	<div class="clear"></div>
+</li>
+
+
+</ol>
+
+
+
+
+<a name="respond" id="respond"></a>
+
+<h3 class="reply">Leave a Reply</h3>
+
+
+<form action="http://www.xaprb.com/blog/wp-comments-post.php" method="post" id="commentform">
+<div class="postinput">
+<p><input class="comment" name="author" id="author" value="" size="22" tabindex="1" type="text">
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input class="comment" name="email" id="email" value="" size="22" tabindex="2" type="text">
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input class="comment" name="url" id="url" value="" size="22" tabindex="3" type="text">
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="response" id="response" size="22" tabindex="5" type="text"> <label for="response"><small>Is a lion a cat?  Type 'yes' or 'no'.</small></label> <input name="key" value="45a6207d88a0a934ab220560e6ad5586" type="hidden"></p>
+
+<p><input class="submit" name="submit" id="submit" tabindex="5" value="Submit Comment" title="Please review your comment before submitting" type="submit">
+<input name="comment_post_ID" value="155" type="hidden">
+</p>
+
+
+	<p style="clear: both;" class="subscribe-to-comments">
+	<input name="subscribe" id="subscribe" value="subscribe" style="width: auto;" type="checkbox">
+	<label for="subscribe">Notify me of followup comments via e-mail</label>
+	</p>
+
+
+</div>
+<input value="1235081602 189.148.172.58" name="bb2_screener_" type="hidden"></form>
+
+
+
+
+</div> 
+
+<div id="sidebar">
+					<h3>About the Author</h3>			<div class="textwidget"><p>I'm the lead author of <a href="http://www.amazon.com/dp/0596101716?tag=xaprb-20">High Performance MySQL, Second Edition.</a></p>
+
+<p style="text-align: center;"><a href="http://www.amazon.com/dp/0596101716?tag=xaprb-20"><img src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/high_performance_mysql.jpg" alt="High Performance MySQL"></a></p>
+
+<p>I am Director of Consulting at <a href="http://www.percona.com/">Percona</a>.  You can contact me like this:</p>
+
+<p><code>SELECT REVERSE('moc.anocrep@norab');</code></p></div>
+		<h3>Related Posts</h3><li><a href="http://www.xaprb.com/blog/2005/09/23/how-to-write-a-sql-exclusion-join/" rel="bookmark" title="Permanent Link: How to write a SQL exclusion join">How to write a SQL exclusion join</a> <em>There is usually more than one way to write a...</em></li><li><a href="http://www.xaprb.com/blog/2005/09/27/simulating-the-sql-row_number-function/" rel="bookmark" title="Permanent Link: How to simulate the SQL ROW_NUMBER function">How to simulate the SQL ROW_NUMBER function</a> <em>If your RDBMS does not support the ROW_NUMBER function, it...</em></li><li><a href="http://www.xaprb.com/blog/2005/09/28/simulating-the-group-concat-function/" rel="bookmark" title="Permanent Link: How to simulate the GROUP_CONCAT function">How to simulate the GROUP_CONCAT function</a> <em>MySQL 4.1 adds a number of new aggregate functions, among...</em></li><li><a href="http://www.xaprb.com/blog/2006/11/28/how-to-write-sql-join-clauses-more-compactly/" rel="bookmark" title="Permanent Link: How to write SQL JOIN clauses more compactly">How to write SQL JOIN clauses more compactly</a> <em>Here's a way to write join clauses so they are...</em></li><li><a href="http://www.xaprb.com/blog/2005/10/03/understanding-sql-joins/" rel="bookmark" title="Permanent Link: How to understand SQL joins">How to understand SQL joins</a> <em>I have noticed many people do not understand SQL joins,...</em></li>
+<p>Related posts brought to you by <a href="http://mitcho.com/code/yarpp/">Yet Another Related Posts Plugin</a>.</p>		<form id="searchform" method="get" action="http://www.xaprb.com/blog/"><div>
+			<label class="hidden" for="s">Search for:</label>
+			<input name="s" id="s" size="15" value="" type="text">
+			<input value="Search" type="submit">
+		</div></form>
+						<h3>Recent</h3>			<ul>
+						<li><a href="http://www.xaprb.com/blog/2009/02/19/strangest-datetime-format-ever/">Strangest datetime format ever </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/19/migrating-us-government-applications-from-oracle-to-mysql/">Migrating US Government applications from Oracle to MySQL </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/19/measuring-the-popularity-of-the-percona-mysql-build/">Measuring the popularity of the Percona MySQL build </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/17/when-are-you-required-to-have-a-commercial-mysql-license/">When are you required to have a commercial MySQL license? </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/13/are-you-ready-for-the-end-of-the-world/">Are you ready for the end of the world? </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/12/5-ways-to-make-hexadecimal-identifiers-perform-better-on-mysql/">5 ways to make hexadecimal identifiers perform better on MySQL </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/10/innotop-is-back/">innotop is back </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/09/news-on-mysql-cacti-templates/">News on MySQL Cacti Templates </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/08/thoughts-on-the-new-performance_schema-in-mysql/">Thoughts on the new PERFORMANCE_SCHEMA in MySQL </a></li>
+						<li><a href="http://www.xaprb.com/blog/2009/02/06/im-a-mysql-conference-and-expo-advocate-again/">I’m a MySQL Conference and Expo advocate again </a></li>
+						</ul>
+		<h3>Related Links</h3>
+	<ul class="xoxo blogroll">
+<li><a href="http://mysqlha.blogspot.com/" rel="acquaintance met colleague" title="Google’s MySQL and InnoDB expert">Mark Callaghan</a></li>
+<li><a href="http://www.mysqlperformanceblog.com/" rel="colleague" title="The undisputed experts">MySQL Performance Blog</a></li>
+<li><a href="http://www.percona.com/" title="LAMP application performance consultants">Percona</a></li>
+<li><a href="http://peterzaitsev.com/" title="Expertise, vision, leadership">Peter Zaitsev</a></li>
+<li><a href="http://www.planetmysql.org/" title="MySQL blog aggregator">Planet MySQL</a></li>
+<li><a href="http://www.rkgblog.com/" title="Search-engine marketing excellence">The Rimm-Kaufman Group</a></li>
+
+	</ul>
+
+					<h3>Admin</h3>			<ul>
+						<li><a href="http://www.xaprb.com/blog/wp-login.php">Log in</a></li>
+			<li><a href="http://www.xaprb.com/blog/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://www.xaprb.com/blog/comments/feed/" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+		
+
+</div>
+
+</div>
+
+<div id="footer">
+	<p>The Journalist template by <a href="http://lucianmarin.com/" rel="designer">Lucian E. Marin</a> — Built for <a href="http://wordpress.org/">WordPress</a></p>
+</div>
+
+
+<!--
+Google Analytics Plugin for Wordpress and BBPress
+http://boakes.org/analytics
+-->
+<script src="How%20to%20simulate%20FULL%20OUTER%20JOIN%20in%20MySQL%20at%20Xaprb_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-101883-1";
+urchinTracker();
+</script>
+
+
+</body></html>

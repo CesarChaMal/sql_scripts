@@ -1,0 +1,882 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0052)http://databases.about.com/od/sql/l/aacuberollup.htm -->
+<!--DVID=000001D5--><HTML><HEAD><TITLE>Summarizing Data with CUBE and ROLLUP</TITLE>
+<META 
+content="SQL's CUBE and ROLLUP commands allow for the efficient summarization of data.  Learn how to use them here!" 
+name=description>
+<META 
+content="rollup cube structured query language sql data summarization data mining sql server oracle cube" 
+name=keywords>
+<META content=FrontPage.Editor.Document name=ProgId><!--GIHEDSTRT-->
+<META http-equiv=X-UA-Compatible content=chrome=1>
+<META http-equiv=Content-Type content=text/html;charset=ISO-8859-1>
+<META content=NOODP name=ROBOTS>
+<META content="Wednesday, 17-Nov-2010 03:05:16 GMT" name=pd><LINK 
+href="http://0.tqn.com/f/a08.ico" rel="shortcut icon"><LINK title=About.com 
+href="http://z.about.com/0/dc/osrch.htm" 
+type=application/opensearchdescription+xml rel=search>
+<SCRIPT>var ziRfw=0;zOBT=" Ads";function zIpSS(u){zpu(0,u,280,375,"ssWin")}function zIlb(l,t,f){zT(l,'18/1Pp/wX')}</SCRIPT>
+<LINK media=all href="Summarizing Data with CUBE and ROLLUP_archivos/s44.css" 
+rel=stylesheet><!--[if lt IE 9]><LINK media=all 
+href="Summarizing Data with CUBE and ROLLUP_archivos/ie.css" type=text/css 
+rel=stylesheet><![endif]--><!--[if lt IE 8]><LINK media=all 
+href="Summarizing Data with CUBE and ROLLUP_archivos/rdie.css" type=text/css 
+rel=stylesheet><![endif]-->
+<META http-equiv=pics-Label 
+content='(pics-1.1 "http://www.icra.org/pics/vocabularyv03/" l gen true for "http://databases.about.com" r (n 0 s 0 v 0 l 0 oa 0 ob 0 oc 0 od 0 oe 0 of 0 og 0 oh 0 c 0) gen true for "http://databases.about.com" r (n 0 s 0 v 0 l 0 oa 0 ob 0 oc 0 od 0 oe 0 of 0 og 0 oh 0 c 0))'>
+<SCRIPT>zWASL=1;zGRH=1</SCRIPT>
+
+<STYLE>#tt39 #articlebody .gB A.t {
+	TEXT-DECORATION: underline
+}
+#tt39 #articlebody .gB A.t:hover {
+	TEXT-DECORATION: underline
+}
+#tt39 #articlebody .gB A.u {
+	TEXT-DECORATION: underline
+}
+#tt39 #articlebody .gB A.u:hover {
+	TEXT-DECORATION: underline
+}
+#widgets .gB A.t {
+	TEXT-DECORATION: underline
+}
+#widgets .gB A.t:hover {
+	TEXT-DECORATION: underline
+}
+#abc .gB A.t {
+	TEXT-DECORATION: underline
+}
+#abc .gB A.t:hover {
+	TEXT-DECORATION: underline
+}
+#abm .gB A.t {
+	TEXT-DECORATION: underline
+}
+#abm .gB A.t:hover {
+	TEXT-DECORATION: underline
+}
+#abc .gB A.u {
+	TEXT-DECORATION: underline
+}
+#abc .gB A.u:hover {
+	TEXT-DECORATION: underline
+}
+#abm .gB A.u {
+	TEXT-DECORATION: underline
+}
+#abm .gB A.u:hover {
+	TEXT-DECORATION: underline
+}
+#widgets .gB A.u {
+	TEXT-DECORATION: underline
+}
+#widgets .gB A.u:hover {
+	TEXT-DECORATION: underline
+}
+</STYLE>
+
+<STYLE>#wide #gB3 {
+	CLEAR: left; MARGIN-RIGHT: 0px
+}
+</STYLE>
+
+<STYLE></STYLE>
+
+<STYLE>#guideinfo {
+	FONT: 11px/1.3 Verdana; COLOR: #666; ZOOM: 1; POSITION: relative
+}
+#guideinfo STRONG {
+	TEXT-DECORATION: underline
+}
+#guideinfo .cntnr {
+	MIN-HEIGHT: 79px; PADDING-BOTTOM: 6px; MARGIN: 0px 0px 0px 91px; POSITION: relative
+}
+#guideinfo P A {
+	FONT-WEIGHT: bold
+}
+#guideinfo #thumb {
+	FONT: 11px/1.3 Georgia
+}
+#tt1 #guideinfo #thumb {
+	LEFT: -91px; BOTTOM: 0px; POSITION: absolute
+}
+#guideinfo #ae {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 2em; PADDING-BOTTOM: 1em; MARGIN: 0px; FONT: 14px/1.3 Georgia bold; COLOR: #666; PADDING-TOP: 0px; LIST-STYLE-TYPE: none
+}
+#guideinfo #ae A {
+	FONT-WEIGHT: bold; TEXT-DECORATION: underline
+}
+#guideinfo IMG {
+	DISPLAY: block
+}
+#guideinfo .est {
+	RIGHT: 12px; FONT: 11px/1.3 Georgia; WIDTH: 120px; BOTTOM: -1.6em; POSITION: absolute; TEXT-ALIGN: right
+}
+#tt1 #guideinfo #img .est {
+	RIGHT: -160px
+}
+#tt1 #guideinfo .est {
+	RIGHT: 3px
+}
+#tt1 #guideinfo .cntnr UL {
+	MARGIN-TOP: 0.5em
+}
+#tt1 #guideinfo .social {
+	PADDING-RIGHT: 0px; BORDER-TOP: #d5d0bf 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 2px; MARGIN: 0px; PADDING-TOP: 2px
+}
+#guideinfo A {
+	TEXT-DECORATION: none
+}
+#guideinfo A:hover {
+	TEXT-DECORATION: underline
+}
+#guideinfo .fol A {
+	TEXT-DECORATION: underline
+}
+#tt1 #guideinfo {
+	MARGIN-BOTTOM: 1.5em
+}
+.social LI {
+	FLOAT: left; MARGIN-RIGHT: 5px
+}
+#tt1 #guideinfo .social LI {
+	PADDING-LEFT: 10px; BACKGROUND: url(http://0.tqn.com/f/t1/bl2.png) no-repeat 0px 0.45em; MARGIN-LEFT: 0px; LIST-STYLE-TYPE: none
+}
+.social A {
+	COLOR: #f60
+}
+#widgets {
+	Z-INDEX: 9; BACKGROUND: #fff; FLOAT: right; WIDTH: 336px; POSITION: relative
+}
+#newsletter INPUT#em {
+	WIDTH: 195px
+}
+#newsletter .signup {
+	WIDTH: 100px
+}
+#articlebody .tr {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+</STYLE>
+
+<META content="MSHTML 6.00.5730.13" name=GENERATOR></HEAD>
+<BODY class=gt5 id=tt0>
+<SCRIPT language=JavaScript>
+<!--
+zGOW=0;xd=0;zap="";zAth='7100';zAthG='7100';zTt='0';zir='';zBTS=1;zBT=1;zSt='';zGz='g'
+ch='compute';gs='databases';xg="Databases";zcs=''
+zFDT='0'
+zFST='0'
+zOr='ACM40t2XOkWA0s5H';zTbO=zRQO=1;zp0=zp1=zp2=zp3=zfs=0;zDc=1;
+zSm=zSu=zhc=zpb=zgs=zdn='';zFS='ACM2AAS10AC021AA0110A00302';zFD='ACM2AAS10AC021AA0110A00302'
+zDO=zis=1;zpid=zi=zRf=ztp=zpo=0;zdx=20;zfx=100;zJs=13;
+zi=1;zz=';336280=2-1-1299;72890=2-1-1299;336155=2-1-12-1;93048=2-1-12-1';zx='3-1-1399';zde=15;zdp=1440;zds=1440;zfp=0;zfs=66;zfd=100;zdd=20;zaX=new Array(11, new Array(100,504,8198,1,'336,210'),7, new Array(100,284,8196,9,'336,290'));zDc=1;;zDO=1;;zhc='';;zGTH=1;
+zGo=0;zG=17;zTac=2;zDot=0;
+zObT="Database";zRad=5;var tp=" primedia_"+(zBT?"":"non_")+"site_targeting";if(!this.zGCID)zGCID=tp
+else zGCID+=tp;
+if(zBT>0){zOBR=1}
+//-->
+</SCRIPT>
+
+<SCRIPT language=JavaScript 
+src="Summarizing Data with CUBE and ROLLUP_archivos/cj017x14t421p9.js"></SCRIPT>
+
+<SCRIPT>zDO=0</SCRIPT>
+
+<SCRIPT language=JavaScript 
+src="Summarizing Data with CUBE and ROLLUP_archivos/show_ads.js"></SCRIPT>
+<NOSCRIPT>
+<META http-equiv=refresh 
+content=0;url=http://www.about.com/snf.htm?u=http://databases.about.com/od/sql/l/aacuberollup.htm%3Frd%3D1></NOSCRIPT>
+<SCRIPT>z930=zpreC(930,48);if(thin){z930=0};z160=zpreC(160,600);z336=zpreC(336,280);z728=zpreC(728,90);z155=zpreC(336,155);zItw=160</SCRIPT>
+
+<DIV id=abw>
+<DIV id=abh>
+<OL class=ct>
+  <LI class=h><A href="http://www.about.com/" zT="18/1Yd/Zz">Home</A>
+  <LI><A href="http://www.about.com/compute/" zT="18/1Yd/Zz">Computing &amp; 
+  Technology</A>
+  <LI><A href="http://databases.about.com/" zT="18/1Yd/Zz">Databases</A></LI></OL>
+<DIV id=adL>
+<SCRIPT type=text/javascript>if(z930==0 && z728>0){adunit('','',uy,ch,gs,728,90,'1','lb',1)}</SCRIPT>
+</DIV>
+<DIV class=ma>
+<DIV class=lg><A href="http://www.about.com/" zT="18/1Yb/Zv"><IMG alt=About.com 
+src="Summarizing Data with CUBE and ROLLUP_archivos/a148.png"></A></DIV>
+<H2><A title=Databases href="http://databases.about.com/" 
+zT="18/1Yc/Zx">Databases</A></H2></DIV>
+<FORM class=gs action=http://databases.about.com/sitesearch.htm method=get 
+target=_top>
+<FIELDSET><INPUT id=sv name=q alert="Please enter something to search for!" 
+validate="required"><INPUT type=hidden value=databases name=SUName><BUTTON 
+class=btn type=submit>Search</BUTTON></FIELDSET></FORM>
+<UL id=up>
+  <LI class=h><A href="http://databases.about.com/" 
+  zT="18/1ZZ/aZ"><SPAN>Databases</SPAN></A></LI>
+  <LI><A 
+  href="http://databases.about.com/od/administration/u/database_basics.htm" 
+  zT="18/1ZZ/11o">Database Basics</A></LI>
+  <LI class=c><A href="http://databases.about.com/od/sql/u/learning_sql.htm" 
+  zT="18/1ZZ/11q">Learning SQL</A></LI>
+  <LI><A 
+  href="http://databases.about.com/od/administration/u/using_databases.htm" 
+  zT="18/1ZZ/11r">Using Databases</A>
+  <SCRIPT>if(typeof zp != 'undefined'){if(zp[8].d){if(zp[8].d==974 && zp[8].u==3){zp[8].u=8;zp[8].w=121;zp[8].h=23}if(zp[8].d==974 && zp[8].u==7){zp[8].u=9;zp[8].w=196;zp[8].h=23}if(zp[8].d==1005){zp[8].u=2;zp[8].w=149;zp[8].h=23}if(zp[8].d==1027){zp[8].u=2;zp[8].w=156;zp[8].h=23}w('<li id="st">');Dsp(zp[8],'ip');w('</li>')}}</SCRIPT>
+   </LI></UL>
+<UL id=pa>
+  <LI id=ea><A 
+  href="http://databases.about.com/gi/pages/shareurl.htm?PG=http%3a%2f%2fdatabases%2eabout%2ecom%2fod%2fsql%2fl%2faacuberollup%2ehtm&amp;zItl=" 
+  zT="18/1Z0/[3">Share</A>
+  <LI id=pra>
+  <SCRIPT>w(x2+zWl+'?p=1" zT="18/1[N" rel="nofollow">Print</a>')</SCRIPT>
+  </LI></UL></DIV>
+<SCRIPT 
+type=text/javascript>if(z930>0){adunit('','',uy,ch,gs,930,48,'1','s',1)}</SCRIPT>
+
+<DIV class=tr>
+<H4>See More About:</H4>
+<UL>
+  <LI><A href="http://databases.about.com/lr/sql/24975/1/" rel=nofollow 
+  zT="18/1Ys/[1">sql</A>
+  <LI><A href="http://databases.about.com/lr/cube/24975/2/" rel=nofollow 
+  zT="18/1Ys/[1">cube</A>
+  <LI><A href="http://databases.about.com/lr/rollup/24975/3/" rel=nofollow 
+  zT="18/1Ys/[1">rollup</A></LI></UL></DIV>
+<DIV class=clear id=abm>
+<DIV id=abc>
+<DIV id=articlebody><!--gc--><!-- About Linkbox Template Version 3.02 --><!-- Please replace any sample text in brackets [] with the appropriate information -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD colSpan=2><FONT face="verdana, geneva, helvetica" color=#cc0000 
+      size=4><STRONG>Summarizing Data with CUBE and ROLLUP</STRONG></FONT></TD></TR>
+  <TR>
+    <TD bgColor=#cc0000 colSpan=2 height=1><IMG height=1 
+      src="Summarizing Data with CUBE and ROLLUP_archivos/s.gif" width=1 
+      border=0></TD></TR>
+  <TR>
+    <TD colSpan=2><!-- Put Subhead Here. If this is a multi-page feature, put the part # ( ex: Part I: Exploring Your Computer ). If this is a single-page feature, use this space for a tagline that goes with the headline ( ex: Headline is "Draw!" and Tagline is "Bush / Gore Debate Ends in Deadlock" )--><!-- End of Subhead --></TD></TR>
+  <TR>
+    <TD colSpan=2><IMG height=6 
+      src="Summarizing Data with CUBE and ROLLUP_archivos/s.gif" width=1></TD></TR>
+  <TR>
+    <TD vAlign=top rowSpan=2><FONT face="verdana, geneva, helvetica" size=2><!-- Content Area A. If and only if you are putting an image AND text at the top of the page, fill in the area below with your opening paragraph of text. If you are not using an image at the top of the page, LEAVE THIS AREA BLANK and put your first paragraph of text in Content Area B. --><!-- END CONTENT AREA A --></FONT></TD>
+    <TD><!--Image Area A. This is where you put any image that would sit at the top of the page. Images should be no wider than 400 pixels. IF there is text next to the image make sure to align your image to the right using the ALIGN=RIGHT in your IMG SRC tag. If there is no image at the top of the page, LEAVE THIS AREA BLANK --><!-- END IMAGE AREA A --></TD></TR>
+  <TR>
+    <TD><IMG height=6 
+      src="Summarizing Data with CUBE and ROLLUP_archivos/s.gif" width=1></TD></TR>
+  <TR>
+    <TD colSpan=2><!-- BEGIN LINKBOX TABLE -->
+      <TABLE cellSpacing=0 cellPadding=0 width=170 align=right border=0><!--More of this Feature. Use to link to multi-page features on your own site.-->
+        <TBODY>
+        <TR>
+          <TD></TD></TR><!--//end more of this feature-->
+        <TR>
+          <TD><IMG height=6 
+            src="Summarizing Data with CUBE and ROLLUP_archivos/s.gif" 
+          width=1></TD></TR><!--join the discussion. Use to link to relevant forum thread on your site.-->
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=2 width="100%" border=0>
+              <TBODY>
+              <TR bgColor=#ccccff>
+                <TD><FONT face="verdana, geneva, helvetica" color=#330066 
+                  size=1>&nbsp;<B>Join the Discussion</B> </FONT></TD></TR>
+              <TR bgColor=#eeeeee>
+                <TD><FONT face="verdana, geneva, helvetica" size=1>"Share your 
+                  questions and&nbsp; tap the knowledge of hundreds of your 
+                  peers."<BR><A 
+                  href="http://forums.about.com/ab-databases/messages?lgnF=y&amp;msg=38.1">Mike 
+                  Chapple</A><BR>&nbsp;<BR></FONT></TD></TR></TBODY></TABLE></TD></TR>
+        <TR>
+          <TD bgColor=#cc0000><IMG height=1 
+            src="Summarizing Data with CUBE and ROLLUP_archivos/s.gif" 
+          width=160></TD></TR><!--//end join the discussion-->
+        <TR>
+          <TD><IMG height=6 
+            src="Summarizing Data with CUBE and ROLLUP_archivos/s.gif" 
+          width=1></TD></TR><!--related resources. Use to link to related content on YOUR site.-->
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=2 width="100%" border=0>
+              <TBODY>
+              <TR bgColor=#ccccff>
+                <TD><FONT face="verdana, geneva, helvetica" color=#330066 
+                  size=1>&nbsp;<B>Related Resources</B> </FONT></TD></TR>
+              <TR bgColor=#eeeeee>
+                <TD vAlign=top><FONT face="verdana, geneva, helvetica" 
+                  size=1>•&nbsp;<A 
+                  href="http://databases.about.com/library/weekly/aa020401a.htm">SQL 
+                  Fundamentals</A><BR>•&nbsp;<A 
+                  href="http://databases.about.com/cs/oracle/index.htm">Oracle 
+                  Resources</A><BR>•&nbsp;<A 
+                  href="http://databases.about.com/library/weekly/aa052001a.htm">Choosing 
+                  a Database</A>&nbsp;<BR></FONT></TD></TR></TBODY></TABLE></TD></TR>
+        <TR>
+          <TD bgColor=#cc0000><IMG height=1 
+            src="Summarizing Data with CUBE and ROLLUP_archivos/s.gif" 
+          width=1></TD></TR><!--//end related resources--></TBODY></TABLE><FONT 
+      face="verdana, geneva, helvetica" size=2></FONT>
+      <P align=left><FONT face="Times New Roman" size=3>Looking for a quick, 
+      efficient way to summarize the data stored in your database?&nbsp; The SQL 
+      ROLLUP and CUBE commands offer a valuable tool for gaining some quick and 
+      dirty insight into your data.&nbsp; ROLLUP and CUBE are SQL extensions and 
+      they're available in SQL Server 6.5 (and above) and Oracle 8i (and 
+      above).</FONT>
+      <P align=left><FONT face="Times New Roman" size=3>The CUBE command is 
+      added to an SQL&nbsp;</FONT>
+      <P align=left><FONT face="Times New Roman" size=3>To provide an example, 
+      let's imagine a table that contains the number and type of pets available 
+      for sale at our chain of pet stores:</FONT>
+      <P align=left><FONT face="verdana, geneva, helvetica" 
+      size=2><B>Pets</B></FONT> 
+      <TABLE width=293 border=1>
+        <TBODY>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier><B>Type</B></FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier><B>Store</B></FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier><B>Number</B></FONT></P></TD></TR>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Miami</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>12</FONT></P></TD></TR>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Miami</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>18</FONT></P></TD></TR>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Tampa</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>4</FONT></P></TD></TR>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Tampa</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>14</FONT></P></TD></TR>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>9</FONT></P></TD></TR>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>5</FONT></P></TD></TR>
+        <TR>
+          <TD width=103>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>1</FONT></P></TD></TR></TBODY></TABLE>
+      <DIV id=wide>
+      <SCRIPT>zSB(3,3)</SCRIPT>
+      </DIV>
+      <P align=left><FONT face="Times New Roman" size=3>As the proud owners of 
+      this Florida pet superstore, we'd like to take a quick look at various 
+      aspects of our inventory.&nbsp; We could hire an SQL programmer to sit 
+      down and write a number of queries to retrieve the exact data that we're 
+      looking for.&nbsp; However, our dataset isn't very large and we enjoy 
+      looking at the raw numbers.&nbsp; Our hunger for data can be appeased 
+      using the CUBE command.&nbsp; Here's the sample SQL:</FONT>
+      <P align=left><FONT face="Courier New">SELECT Type, Store, SUM(Number) as 
+      Number<BR>FROM Pets&nbsp;<BR>GROUP BY type,store&nbsp;<BR>WITH CUBE</FONT>
+      <P align=left><FONT face="Times New Roman" size=3>And the results of the 
+      query:<BR></FONT>
+      <TABLE width=293 border=1>
+        <TBODY>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier><B>Type</B></FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier><B>Store</B></FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier><B>Number</B></FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Miami</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>18</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>9</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>27</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Miami</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>12</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>5</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Tampa</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>14</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>31</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>1</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Tampa</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>4</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>5</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>63</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Miami</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>30</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>15</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=107>
+            <P align=left><FONT face=Courier>Tampa</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>18</FONT></P></TD></TR></TBODY></TABLE>
+      <P align=left><FONT face="Times New Roman" size=3>Wow!&nbsp; That's a lot 
+      of data!&nbsp; Notice that we are presented with a number of additional 
+      groupings that contain NULL fields that wouldn't appear in the results of 
+      a normal GROUP BY command.&nbsp; These are the summarization rows added by 
+      the CUBE statement.&nbsp; Analyzing the data, you'll notice that our chain 
+      has 27 cats, 31 dogs and 5 turtles spread among our three stores.&nbsp; 
+      Our Miami store has the largest number of pets in stock with a whopping 
+      inventory of 30 pets.</FONT>
+      <P align=left><FONT face="Times New Roman" size=3>We're not particularly 
+      interested in the total number of pets at each store -- we'd just like to 
+      know our statewide inventory of each species along with the standard GROUP 
+      BY data.&nbsp; Utilizing the ROLLUP operator instead of the CUBE operator 
+      will eliminate the results that contain a NULL in the first 
+      column.&nbsp;</FONT>
+      <P align=left><FONT face="Times New Roman" size=3>Here's the SQL:</FONT>
+      <P align=left><FONT face="Courier New">SELECT Type, Store, SUM(Number) as 
+      Number<BR>FROM Pets&nbsp;<BR>GROUP BY type,store&nbsp;<BR>WITH 
+      ROLLUP</FONT>
+      <P align=left><FONT face="Times New Roman" size=3>And the 
+      results:<BR></FONT>
+      <TABLE width=293 border=1>
+        <TBODY>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier><B>Type</B></FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier><B>Store</B></FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier><B>Number</B></FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Miami</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>18</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>9</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Cat</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>27</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Miami</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>12</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>5</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Tampa</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>14</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Dog</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>31</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Naples</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>1</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>Tampa</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>4</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>Turtle</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>5</FONT></P></TD></TR>
+        <TR>
+          <TD width=104>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=106>
+            <P align=left><FONT face=Courier>NULL</FONT></P></TD>
+          <TD width=62>
+            <P align=left><FONT face=Courier>63</FONT></P></TD></TR></TBODY></TABLE>
+      <P align=left><FONT face="Times New Roman" size=3>And that's CUBE and 
+      ROLLUP in a nutshell!&nbsp; Be sure to check back next week for another 
+      exciting journey into the world of databases!</FONT><FONT 
+      face="verdana, geneva, helvetica" size=2> 
+      <P align=center><BR><BR>
+      <SCRIPT type=text/javascript>w('<div id="ll"><div class="n5">New posts to the <a href="http://forums.about.com/ab-databases/start/?lgnF=y" zT="18/1My" >Databases forums</a>:</div><ul><li><a href="http://forums.about.com/dir-app/acx/ACDispatch.aspx?action=message&webtag=ab-databases&msg=3219" zT="18/1My">concatenating 2 fields</a></li><li><a href="http://forums.about.com/dir-app/acx/ACDispatch.aspx?action=message&webtag=ab-databases&msg=3226" zT="18/1My">database normalisation</a></li><li><a href="http://forums.about.com/dir-app/acx/ACDispatch.aspx?action=message&webtag=ab-databases&msg=3225" zT="18/1My">Backup option not listed</a></li></ul></div>')</SCRIPT>
+      </FONT></P></TD></TR>
+  <TR>
+    <TD colSpan=2></TD></TR></TBODY></TABLE><!--/gc--></DIV>
+<DIV id=coda>
+<DIV id=resources>
+<DIV id=rel>
+<H5>Related Articles</H5>
+<UL>
+  <LI><A href="http://php.about.com/od/learnmysql/ss/mysql_4.htm" 
+  zT="18/1YL/Zn">SQL tutorial - MySQL Tutorial - SQL Data Types</A>
+  <LI><A href="http://databases.about.com/od/sqlserver/a/exact_numeric.htm" 
+  zT="18/1YL/Zn">Exact Numeric Data Types in SQL Server</A>
+  <LI><A href="http://databases.about.com/od/sqlserver/a/approx_numeric.htm" 
+  zT="18/1YL/Zn">Approximate Numeric Data Types in SQL Server</A>
+  <LI><A 
+  href="http://java.about.com/od/understandingdatatypes/a/primitivetypes.htm" 
+  zT="18/1YL/Zn">Primitive Data Types</A>
+  <LI><A href="http://javascript.about.com/od/hintsandtips/a/datatype.htm" 
+  zT="18/1YL/Zn">JavaScript Data Typing</A></LI></UL></DIV></DIV>
+<DIV id=gi>
+<DIV class=cr>
+<DIV class=img><A href="http://databases.about.com/bio/Mike-Chapple-7100.htm" 
+zT="18/1YK"><IMG alt="Mike Chapple" 
+src="Summarizing Data with CUBE and ROLLUP_archivos/7100.jpg"></A></DIV>
+<DIV class=est>Guide since 2000</DIV>
+<P><A href="http://databases.about.com/bio/Mike-Chapple-7100.htm" 
+zT="18/1YO">Mike Chapple</A><BR>Databases Guide</P>
+<UL>
+  <LI><A href="http://databases.about.com/gi/pages/stay.htm" 
+  zT="18/1YS"><STRONG>Sign up</STRONG> for my Newsletter</A></LI></UL>
+<UL class=so>
+  <LI><A href="http://databases.about.com/b/" zT="18/1YM">My Blog</A></LI>
+  <LI><A 
+  href="http://forums.about.com/n/pfx/forum.aspx?nav=messages&amp;webtag=ab-databases" 
+  zT="18/1YN">My Forum</A></LI></UL></DIV></DIV></DIV></DIV>
+<DIV id=aba>
+<DIV id=com>
+<FORM class=nl name=subscription action=http://clk.about.com/ method=get 
+alert="Please enter a valid email address."><LABEL for=nTxt>Free Databases 
+Newsletter!</LABEL><INPUT type=hidden value=18/1a9 name=zi><INPUT type=hidden 
+value=http://databases.about.com/gi/pages/mmail.htm name=surl><INPUT type=hidden 
+value=http://databases.about.com/gi/pages/mmail.htm name=eurl><INPUT type=hidden 
+value=+:gs::databases name=cmd_databases><INPUT type=hidden value=1 
+name=gs><INPUT type=hidden value=databases name=sdn><INPUT type=hidden value=0 
+name=tt><INPUT type=hidden value=1 name=bts><SPAN><INPUT type=email name=email 
+validate="email" placeholder="Enter email address"></SPAN><BUTTON name=newsub 
+type=submit>Sign Up</BUTTON></FORM>
+<P><A 
+href="http://forums.about.com/n/pfx/forum.aspx?nav=messages&amp;webtag=ab-databases" 
+zT="18/1Z1"><STRONG>Discuss</STRONG> in my Forum</A></P></DIV>
+<SCRIPT type=text/javascript>if(z336>0){function rb600(){if(gEI('bb'))gEI('bb').height=600}w('<div id="adB">'+ap[0]+at[4]+as[0]);adunit('','','about.com',ch,gs,336,280,'1','bb',3);w('</div>')}if(z155>0){w('<div id="adP">'+ap[0]+at[4]+as[0]);adunit('','','about.com',ch,gs,336,155,'1','ps',4);w('</div>')}</SCRIPT>
+
+<SCRIPT>zob();</SCRIPT>
+
+<DIV class=pane id=videos>
+<H3>Video</H3>
+<DL id=v0>
+  <DT><A href="http://video.about.com/webdesign/Using-Meta-Data-for-Search.htm" 
+  zT="18/1Yr/2"><IMG alt="Using Meta Data for Search" 
+  src="Summarizing Data with CUBE and ROLLUP_archivos/6_metatags.jpg"></A><A 
+  class=ol 
+  href="http://video.about.com/webdesign/Using-Meta-Data-for-Search.htm" 
+  zT="18/1Yr/2"></A>
+  <DD>
+  <H5><A href="http://video.about.com/webdesign/Using-Meta-Data-for-Search.htm" 
+  zT="18/1Yr/2">Using Meta Data for Search</A></H5><A class=play 
+  href="http://video.about.com/webdesign/Using-Meta-Data-for-Search.htm" 
+  zT="18/1Yr/2"></A></DD></DL>
+<DL id=v1>
+  <DT><A 
+  href="http://video.about.com/spreadsheets/Export-Data-From-Excel-to-Word.htm" 
+  zT="18/1Yr/2"><IMG alt="Export Data From an Excel Sheet to a Word Document" 
+  src="Summarizing Data with CUBE and ROLLUP_archivos/exportdataExcel.jpg"></A><A 
+  class=ol 
+  href="http://video.about.com/spreadsheets/Export-Data-From-Excel-to-Word.htm" 
+  zT="18/1Yr/2"></A>
+  <DD>
+  <H5><A 
+  href="http://video.about.com/spreadsheets/Export-Data-From-Excel-to-Word.htm" 
+  zT="18/1Yr/2">Export Data From an Excel Sheet to a Word Document</A></H5><A 
+  class=play 
+  href="http://video.about.com/spreadsheets/Export-Data-From-Excel-to-Word.htm" 
+  zT="18/1Yr/2"></A></DD></DL>
+<DIV class=more><A onclick="zT(this,'18/1Yr/2');" 
+href="http://video.about.com/compute.htm">More Videos</A></DIV></DIV>
+<SCRIPT type=text/javascript>if(zp[11].d){Dsp(zp[11],'ip')}</SCRIPT>
+</DIV>
+<SCRIPT>zSbL=3;zSB(2);zSbL=0</SCRIPT>
+</DIV>
+<DIV id=abf>
+<DIV class="pane clear" id=browse>
+<H3>Explore Databases</H3>
+<DIV id=bc1>
+<H5>Must Reads</H5>
+<UL>
+  <LI><A 
+  href="http://databases.about.com/od/databasetraining/a/databasesbegin.htm" 
+  zT="18/1fG/1">Databases for Beginners</A>
+  <LI><A href="http://databases.about.com/od/sql/a/sqlbasics.htm" 
+  zT="18/1fG/2">SQL Basics</A>
+  <LI><A href="http://databases.about.com/od/sql/tp/faq.htm" zT="18/1fG/3">Top 
+  10 SQL FAQs</A>
+  <LI><A 
+  href="http://databases.about.com/od/administration/tp/beginners_faq.htm" 
+  zT="18/1fG/4">Top 5 Things Beginners Need to Know</A>
+  <LI><A href="http://databases.about.com/od/administration/l/blglossary.htm" 
+  zT="18/1fG/5">Database Glossary</A> </LI></UL>
+<DIV class=lkbx>
+<DIV class=obM id=ob/O3>
+<DIV class=n5>Most Popular</DIV>
+<P><A onclick="zT(this,'18/yV/O3')" 
+href="http://databases.about.com/od/specificproducts/a/normalization.htm">Database 
+Normalization Basics</A><A onclick="zT(this,'18/yV/O3')" 
+href="http://databases.about.com/od/sqlserver/a/storedprocedure.htm">SQL Server 
+Stored Procedures</A><A onclick="zT(this,'18/yV/O3')" 
+href="http://databases.about.com/cs/specificproducts/g/er.htm">Entity-Relationship 
+Diagram</A><A onclick="zT(this,'18/yV/O3')" 
+href="http://databases.about.com/cs/administration/g/primarykey.htm">Primary 
+Key</A><A onclick="zT(this,'18/yV/O3')" 
+href="http://databases.about.com/od/access/l/aaaccess1.htm">Microsoft Access 
+Fundamentals</A></P></DIV></DIV></DIV>
+<DIV id=bc2>
+<DIV class=tr>
+<H4>See More About:</H4>
+<UL>
+  <LI><A href="http://databases.about.com/lr/sql/24975/1/" rel=nofollow 
+  zT="18/1gH">sql</A>
+  <LI><A href="http://databases.about.com/lr/cube/24975/2/" rel=nofollow 
+  zT="18/1gH">cube</A>
+  <LI><A href="http://databases.about.com/lr/rollup/24975/3/" rel=nofollow 
+  zT="18/1gH">rollup</A></LI></UL></DIV>
+<SCRIPT>splitList(getElementsByClassName('tr',gEI('bc2'))[0].getElementsByTagName('ul')[0]);</SCRIPT>
+
+<H5>By Category</H5>
+<UL id=bcl>
+  <LI><A href="http://databases.about.com/od/access/Microsoft_Access.htm" 
+  zT="18/1hZ/1">Microsoft Access</A>
+  <LI><A 
+  href="http://databases.about.com/od/sql/Structured_Query_Language_SQL.htm" 
+  zT="18/1hZ/2">Learning SQL</A>
+  <LI><A href="http://databases.about.com/od/sqlserver/Microsoft_SQL_Server.htm" 
+  zT="18/1hZ/3">SQL Server</A>
+  <LI><A href="http://databases.about.com/od/oracle/Oracle_Databases.htm" 
+  zT="18/1hZ/4">Oracle</A>
+  <LI><A 
+  href="http://databases.about.com/od/security/Database_Security_Issues.htm" 
+  zT="18/1hZ/5">Security in Databases</A>
+  <LI><A href="http://databases.about.com/od/shareware/MySQL.htm" 
+  zT="18/1hZ/6">MySQL</A>
+  <LI><A 
+  href="http://databases.about.com/od/administration/Database_Administration.htm" 
+  zT="18/1hZ/7">Administration</A>
+  <LI><A 
+  href="http://databases.about.com/od/specificproducts/Database_Design.htm" 
+  zT="18/1hZ/8">Design</A>
+  <LI><A 
+  href="http://databases.about.com/od/development/Database_Development.htm" 
+  zT="18/1hZ/9">Development</A>
+  <LI><A 
+  href="http://databases.about.com/od/datamining/Data_Mining_and_Data_Warehousing.htm" 
+  zT="18/1hZ/10">Data Mining</A>
+  <LI><A 
+  href="http://databases.about.com/od/databasetraining/Database_Training.htm" 
+  zT="18/1hZ/11">Database Training</A>
+  <LI><A href="http://databases.about.com/od/careers/Careers_in_Databases.htm" 
+  zT="18/1hZ/12">Careers</A>
+  <LI><A 
+  href="http://databases.about.com/od/reviews/Software_and_Book_Reviews.htm" 
+  zT="18/1hZ/13">Reviews</A>
+  <LI><A 
+  href="http://databases.about.com/od/certification1/Database_Certifications.htm" 
+  zT="18/1hZ/14">Certifications</A>
+  <LI><A href="http://databases.about.com/od/otherdatabases/Other_Databases.htm" 
+  zT="18/1hZ/15">Other Databases</A> </LI></UL></DIV></DIV>
+<SCRIPT>splitList(gEI('bcl'));</SCRIPT>
+
+<DIV class=pane id=fpromo>
+<DIV class=n3>More from About.com</DIV>
+<DIV class=fpni>
+<H4><A href="http://compreviews.about.com/od/buyers/a/PCHolidayGuide.htm" 
+zT="1/1gS/ox">Pick the Perfect Computing Gift</A></H4>
+<P>What fun is Christmas without a new toy? We have suggestions at every price 
+point. <SPAN class=more><A 
+href="http://compreviews.about.com/od/buyers/a/PCHolidayGuide.htm" 
+zT="1/1gS/ox">More</A></SPAN></P></DIV>
+<DIV class=fpni>
+<H4><A 
+href="http://peripherals.about.com/od/laptopbagsaccessories/tp/Computer-Stocking-Stuffers.htm" 
+zT="1/1gS/ot">Extras to Make 'em Smile</A></H4>
+<P>Five stocking stuffers any computer user would love to wake up to. <SPAN 
+class=more><A 
+href="http://peripherals.about.com/od/laptopbagsaccessories/tp/Computer-Stocking-Stuffers.htm" 
+zT="1/1gS/ot">More</A></SPAN></P></DIV></DIV>
+<DIV class=ma>
+<DIV class=lg><A href="http://www.about.com/" zT="18/1Yb/Zv"><IMG alt=About.com 
+src="Summarizing Data with CUBE and ROLLUP_archivos/a148.png"></A></DIV>
+<H2><A title=Databases href="http://databases.about.com/" 
+zT="18/1Yc/Zx">Databases</A></H2></DIV>
+<OL class=ct>
+  <LI class=h><A href="http://www.about.com/" zT="18/1Yd/Zz">Home</A>
+  <LI><A href="http://www.about.com/compute/" zT="18/1Yd/Zz">Computing &amp; 
+  Technology</A>
+  <LI><A href="http://databases.about.com/" zT="18/1Yd/Zz">Databases</A></LI></OL>
+<DIV class=hl id=lks>
+<UL>
+  <LI class=f><A href="http://databases.about.com/popular.htm" zT="18/1YY">Most 
+  Popular</A></LI>
+  <LI><A href="http://databases.about.com/updated.htm" zT="18/1]c">Latest 
+  Articles</A></LI>
+  <LI class=rss><A href="http://databases.about.com/gi/pages/stay.htm#rs" 
+  zT="18/1YZ/Zt">RSS</A></LI></UL></DIV></DIV>
+<DIV class=hl id=abi>
+<UL id=si>
+  <LI class=f><A href="http://advertise.about.com/" rel=nofollow 
+  zT="18/1YX/Zr">Advertising Info</A></LI>
+  <LI><A href="http://advertiseonabout.com/News_and_Press/" rel=nofollow 
+  zT="18/1YX/Zr">News &amp; Events</A></LI>
+  <LI><A href="http://jobs.about.com/" rel=nofollow zT="18/1YX/Zr">Work at 
+  About</A></LI>
+  <LI><A href="http://spiderbites.about.com/sitemap.htm" 
+  zT="18/1YX/Zr">SiteMap</A></LI>
+  <LI><A href="http://azlist.about.com/a.htm" zT="18/1]]">All Topics</A></LI>
+  <LI><A href="http://www.about.com/gi/pages/printrequests.html" rel=nofollow 
+  zT="18/1YX/Zr">Reprints</A></LI>
+  <LI><A href="http://www.about.com/gi/pages/hc.htm" rel=nofollow 
+  zT="18/1YX/Zr">Help</A></LI></UL>
+<UL id=li>
+  <LI class=f><A href="http://www.about.com/gi/pages/uagree.htm" rel=nofollow 
+  zT="18/1YX/Zr">User Agreement</A></LI>
+  <LI><A href="http://www.about.com/gi/pages/ethics.htm" rel=nofollow 
+  zT="18/1YX/Zr">Ethics Policy</A></LI>
+  <LI><A href="http://www.about.com/gi/pages/patent.htm" rel=nofollow 
+  zT="18/1YX/Zr">Patent Info.</A></LI>
+  <LI><A href="http://www.about.com/gi/pages/mprivacy.htm" rel=nofollow 
+  zT="18/1YX/Zr">Privacy Policy</A></LI></UL>
+<UL id=ci>
+  <LI><A href="http://www.advertiseonabout.com/Who_We_Are/" rel=nofollow 
+  zT="18/1YX/Zr">Our Story</A></LI>
+  <LI><A href="http://beaguide.about.com/" rel=nofollow zT="18/1YX/Zr">Write for 
+  About</A></LI></UL>
+<DIV id=di>
+<P>©2010 About.com, a part of <A href="http://www.nytco.com/" zT="1/1JK">The New 
+York Times Company</A>.</P>
+<P>All rights reserved.</P></DIV></DIV>
+<SCRIPT>zCi();validateForms();splitLists();</SCRIPT>
+</DIV>
+<SCRIPT>if(this.zKW&&gEI('sv'))gEI('sv').value=zE(zE(zKW,1),1).replace(new RegExp('\\+','g'),' ')</SCRIPT>
+
+<SCRIPT type=text/javascript><!--
+adclose()
+//-->
+</SCRIPT>
+
+<SCRIPT type=text/javascript>var tcdacmd="dt;da";</SCRIPT>
+
+<SCRIPT src="Summarizing Data with CUBE and ROLLUP_archivos/slf.js" 
+type=text/javascript></SCRIPT>
+</BODY></HTML>

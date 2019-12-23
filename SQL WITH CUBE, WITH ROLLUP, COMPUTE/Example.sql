@@ -1,0 +1,95 @@
+
+CREATE TABLE ##Pets
+(
+   Type VARCHAR(60),
+   Store VARCHAR(60),
+   Number int
+)
+
+insert into ##Pets(Type, Store, Number) 
+select 'Dog', 'Miami',12
+union all
+select 'Cat', 'Miami',18
+union all
+select 'Turtle', 'Tampa',4
+union all
+select 'Dog', 'Tampa',14
+union all
+select 'Cat', 'Naples',9
+union all
+select 'Dog', 'Naples',5
+union all
+select 'Turtle', 'Naples',1
+
+
+SELECT 
+	Type , Store, SUM(Number) as Number
+FROM 
+	##Pets 
+GROUP BY 
+	type ,store 
+WITH 
+	CUBE
+
+SELECT 
+	Type , Store, SUM(Number) as Number
+FROM 
+	##Pets 
+GROUP BY 
+	type ,store 
+WITH 
+	ROLLUP
+
+SELECT 
+	Type , Store, Number
+FROM 
+	##Pets
+ORDER BY 
+	Store
+COMPUTE SUM(Number) BY Store 
+
+SELECT 
+	Type , Store, Number
+FROM 
+	##Pets
+ORDER BY 
+	Type
+COMPUTE SUM(Number) BY Type 
+
+
+
+
+-- SELECT * FROM RECIBO WHERE FECHA_PROCESAMIENTO = CAST(REPLACE('2010-07-27','-','') AS DATETIME)
+
+-- WITH ROLLUP
+SELECT 
+-- RECIBO.*
+RECIBO.ID_RECIBO,
+-- MAX(RECIBO.ID_USUARIO) AS ID_USUARIO,
+RECIBO.ID_USUARIO,
+SUM(RECIBO.IMPORTE) IMPORTE
+FROM RECIBO 
+-- WHERE FECHA_PROCESAMIENTO = CAST(REPLACE('2010-07-27','-','') AS DATETIME)	
+GROUP BY RECIBO.ID_USUARIO,RECIBO.ID_RECIBO WITH ROLLUP
+-- GROUP BY RECIBO.ID_USUARIO,RECIBO.ID_RECIBO WITH CUBE
+
+-- COMPUTE
+SELECT 
+RECIBO.ID_RECIBO,
+RECIBO.ID_USUARIO,
+RECIBO.IMPORTE
+FROM RECIBO 
+-- WHERE FECHA_PROCESAMIENTO = CAST(REPLACE('2010-07-27','-','') AS DATETIME)	
+COMPUTE SUM(RECIBO.IMPORTE) 
+
+-- COMPUTE BY
+-- ESTA CONSULTA HACE LO MISMO QUE LA DEL WITH ROLLUP
+SELECT 
+RECIBO.ID_RECIBO,
+RECIBO.ID_USUARIO,
+RECIBO.IMPORTE
+FROM RECIBO 
+-- WHERE FECHA_PROCESAMIENTO = CAST(REPLACE('2010-07-27','-','') AS DATETIME)	
+ORDER BY RECIBO.ID_USUARIO,RECIBO.ID_RECIBO
+COMPUTE SUM(RECIBO.IMPORTE) 
+BY RECIBO.ID_USUARIO
